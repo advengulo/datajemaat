@@ -20,6 +20,8 @@ class CreateDataKeluargasTable extends Migration
             $table->string('nama_ibu')->nullable();
             $table->string('nama_keluarga')->nullable();
             $table->integer('status_hubungan')->nullable()->unsigned();
+            $table->integer('id_ayah')->nullable();
+            $table->integer('id_ibu')->nullable();
         });
     }
 
