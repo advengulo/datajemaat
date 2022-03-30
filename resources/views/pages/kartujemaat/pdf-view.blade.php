@@ -380,8 +380,8 @@
             @if($data_jemaat->jemaat_gelar_depan !="" && $data_jemaat->jemaat_gelar_belakang !=""){{$data_jemaat->jemaat_gelar_depan}}.{{$data_jemaat->jemaat_nama}},{{$data_jemaat->jemaat_gelar_belakang}} @elseif($data_jemaat->jemaat_gelar_depan !=""){{$data_jemaat->jemaat_gelar_depan}}.{{$data_jemaat->jemaat_nama}},@elseif($data_jemaat->jemaat_gelar_belakang !=""){{$data_jemaat->jemaat_nama}},{{$data_jemaat->jemaat_gelar_belakang}}@else{{$data_jemaat->jemaat_nama}}
             @endif
         </div>
-        <div class="col-md-3" style="text-align:center;">SNK Drs. ELYSATI NAZARA, MM. <br> KETUA</div>
-        <div class="col-md-3" style="text-align:center;">SNK TALIFAUDU TELAUMBANUA <br> SEKRETARIS</div>
+        <div class="col-md-3" style="text-align:center;">SNK dr. Victor K.F. Tel, Sp.B. <br> KETUA</div>
+        <div class="col-md-3" style="text-align:center;">SNK Asanudin TELAUMBANUA <br> SEKRETARIS</div>
     </div>
     </div>              
 {{-- </div> --}}
