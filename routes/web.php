@@ -72,9 +72,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/grafik-pekerjaan', 'GrafikController@pekerjaan');
     Route::get('/grafik-jemaat-bergabung', 'GrafikController@jemaatbergabung');
 
-    Route::get('/data-lingkungan', 'LingkunganMasterController@index')->name('datalingkungan');
-    Route::post('/data-lingkungan', 'LingkunganMasterController@store')->name('lingkungan.store');
-    Route::patch('/data-lingkungan/delete/{id}', 'LingkunganMasterController@destroy')->name('lingkungan.destroy');
+    Route::controller(LingkunganMasterController::class)->group(function(){
+        Route::get('/data-lingkungan', 'index')->name('datalingkungan');
+        Route::post('/data-lingkungan', 'store')->name('lingkungan.store');
+        Route::patch('/data-lingkungan/update/{id}', 'update')->name('lingkungan.update');
+        Route::patch('/data-lingkungan/delete/{id}', 'destroy')->name('lingkungan.destroy');
+    });
 
     Route::prefix('data-warning')->group(function () {
         Route::get('/tanggal-lahir', 'DataWarningController@tanggalLahir')->name('warning.tanggal-lahir');

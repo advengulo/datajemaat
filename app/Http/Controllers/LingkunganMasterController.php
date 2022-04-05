@@ -34,6 +34,15 @@ class LingkunganMasterController extends Controller
         return back()->with(['success' => 'Data Lingkungan ditambahkan']);        
     }
 
+    public function update(Request $request, $id)
+    {
+        $lingkungan = master_lingkungan::findOrFail($id);
+        $lingkungan->nama_snk = $request->nama_snk;
+        $lingkungan->update();
+
+        return back()->with(['success' => 'Nama SNK berhasil diupdate']);
+    }
+
     public function destroy($id)
     {
         $lingkungan = master_lingkungan::find($id);

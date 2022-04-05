@@ -27,9 +27,19 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row">
+                            @if ($message = Session::get('success'))
+                                <div class="col-md-12">
+                                    <div class="alert alert-info alert-block">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                    <!-- Modal -->
-                    <form action="{{route('lingkungan.store')}}" method="post" enctype="multipart/form-data">
+                    <!-- Modal  add data-->
+                    <form action="{{route('lingkungan.store')}}" id="formLingkungan" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="modal fade" id="tambahdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -57,6 +67,44 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                         <button type="subbmit" class="btn btn-primary"><i class="fas fa-plus" style="padding-right:10px"></i>Tambah Data</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--  End of Modal -->
+
+                    <!-- Modal update data-->
+                    <form action="" id="formLingkunganUpdate" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }} 
+                        <div class="modal fade" id="updateData" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Update Data Lingkungan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>   
+                                    </div>
+                                    <div class="modal-body">                                    
+                                        <div class="form-group">
+                                            <label for="nomorlingkungan">Nomor Lingkungan</label>
+                                            <input type="text" disabled class="form-control" name="nomor_lingkungan" id="updateNoLing">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="namalingkungan">Nama Lingkungan</label>
+                                            <input type="text" disabled class="form-control" name="nama_lingkungan" id="updateNamaLing">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="snk">Nama Satua Niha Keriso (SNK)</label>
+                                            <input type="text" class="form-control" name="nama_snk" id="updateSnk">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="subbmit" class="btn btn-info"><i class="fas fa-check-square" style="padding-right:10px"></i>Update Data</button>
                                     </div>
                                     
                                 </div>
@@ -103,11 +151,17 @@
                                             <td>{{$lingkungan->nama_lingkungan}}</td>
                                             <td>{{$lingkungan->nama_snk}}</td>
                                             <td style="text-align:center">
-                                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</button>
-                                                <form action="{{ route('lingkungan.destroy', $lingkungan->id)}}" method="POST">
+                                                <button class="btn btn-sm btn-warning"
+                                                    id="btnEdit"
+                                                    data-route="{{ route('lingkungan.update', $lingkungan->id) }}" 
+                                                    data-noling="{{ $lingkungan->nomor_lingkungan }}"
+                                                    data-namaling="{{ $lingkungan->nama_lingkungan }}"
+                                                    data-namasnk="{{ $lingkungan->nama_snk }}"
+                                                    >Edit</button>
+                                                <form style="display: inline" action="{{ route('lingkungan.destroy', $lingkungan->id)}}" method="POST">
                                                     {{ csrf_field() }}
                                                     {{ method_field('PATCH') }}
-                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Hapus </a>
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"> Hapus </a>
                                                 </form>
                                             </td>
                                         </tr>
@@ -158,6 +212,15 @@
                 { "width": "20%", "className": "dt-center", "targets": 3 },
             ]
         });
+
+        $('#btnEdit').click(function(){
+            var route = $(this).data('route')
+            $("#updateNoLing").val($(this).data('noling'))
+            $("#updateNamaLing").val($(this).data('namaling'))
+            $("#updateSnk").val($(this).data('namasnk'))
+            $('#updateData').modal('show')
+            $('#formLingkunganUpdate').prop('action', route);
+        })
     });
 </script>
 @endsection
