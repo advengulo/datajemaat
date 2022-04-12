@@ -25,7 +25,8 @@ class DataJemaatController extends Controller
      */
     public static function index(Request $request)
     {
-        $datajemaats = data_jemaat::where('jemaat_status_aktif','t');
+        $datajemaats = data_jemaat::with('lingkungan')
+            ->where('jemaat_status_aktif','t');
 
         if($request->ajax()){  
             return DataTables::of($datajemaats)
