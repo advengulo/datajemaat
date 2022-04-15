@@ -155,6 +155,7 @@
                                 <li class="{{Request::is("data-jemaat")?'active':''}} || {{Request::is("data-jemaat/profile/*")?'active':''}}"><a title="Data Jemaat" href={{asset('/data-jemaat')}}><span class="mini-sub-pro">Data Jemaat</span></a></li>                            
                                 <li class="{{Request::is("tambah-jemaat")?'active':''}}"><a title="Tambah Jemaat" href={{asset('/tambah-jemaat')}}><span class="mini-sub-pro">Tambah Jemaat</span></a></li>
                                 <li class="{{Request::is("data-kepala-keluarga")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>                            
+                                <li class="{{Request::is("data-jemaat/non-lingkungan")?'active':''}}"><a title="Data Kepala Keluarga" href={{url('/data-jemaat/non-lingkungan')}}><span class="mini-sub-pro">Non Lingkungan</span></a></li>                            
                             </ul>
                         </li>
                         <li class="{{Request::is("kartu-jemaat")?'active':''}}" >
@@ -246,37 +247,36 @@
                                 <div class="row">
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
-                                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn" style="background:none">
-													<i class="educate-icon educate-nav" style="color : #5c5c5c"></i>
-												</button>
+                                            <button type="button" id="sidebarCollapse"
+                                                class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn" style="background:none">
+                                                <i class="educate-icon educate-nav" style="color : #5c5c5c"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
-                                    </div> --}}
                                     <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
                                         <div class="header-right-info">
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
                                                 <li class="nav-item">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-															<img src="{{asset('img/logo/cross-logo.jpg')}}" style="border:1px solid #5c5c5c; border-radius:30px;" alt="" />
-															<span class="admin-name">{{ Auth::user()->name }}</span>
-															<i class="fa fa-angle-down edu-icon edu-down-arrow" style="color : #5c5c5c"></i>
-														</a>
+                                                        <img src="{{asset('img/logo/cross-logo.jpg')}}"
+                                                            style="border:1px solid #5c5c5c; border-radius:30px;" alt="" />
+                                                        <span class="admin-name">{{ Auth::user()->name }}</span>
+                                                        <i class="fa fa-angle-down edu-icon edu-down-arrow" style="color : #5c5c5c"></i>
+                                                    </a>
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                        {{-- <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a> --}}
                                                         </li>
                                                         <li><a href="{{ route('logout') }}"
-                                                        onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                                            <span class="edu-icon edu-locked author-log-ic"></span>Log Out                                                         
-                                                        </a>
+                                                                onclick="event.preventDefault();
+                                                                                                                                    document.getElementById('logout-form').submit();">
+                                                                <span class="edu-icon edu-locked author-log-ic"></span>Log Out
+                                                            </a>
                                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                                 @csrf
                                                             </form>
                                                         </li>
                                                     </ul>
                                                 </li>
-                                                <div class="col-md-1"></div>                                                
+                                                <div class="col-md-1"></div>
                                             </ul>
                                         </div>
                                     </div>
@@ -301,6 +301,7 @@
                                                 <li><a href="{{asset('/data-jemaat')}}">Data Jemaat</a></li>
                                                 <li><a href="{{asset('/tambah-jemaat')}}">Tambah Jemaat</a></li>
                                                 <li><a href="{{asset('/data-kepala-keluarga')}}">Kepala Keluarga</a></li>
+                                                <li><a href="{{url('/data-jemaat/non-lingkungan')}}">Kepala Keluarga</a></li>
                                             </ul>
                                         </li>
                                         <li class="{{Request::is("kartu-jemaat")?'active':''}}" >

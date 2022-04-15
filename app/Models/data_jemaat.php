@@ -36,6 +36,16 @@ class data_jemaat extends Model
         return $this->jemaat_tanggal_bergabung->year;
     }
 
+    public function scopeIsActive()
+    {
+        return $this->where('jemaat_status_aktif','t');
+    }
+
+    public function scopeLingkunganNull()
+    {
+        return $this->where('id_lingkungan', null);
+    }
+
     public function pendidikan()
     {
         return $this->belongsTo('App\Models\master_pendidikan', 'id_pendidikan_akhir');

@@ -560,4 +560,26 @@ class DataJemaatController extends Controller
         $data->nama_ibu = $request->nama_ibu;
         $data->save();
     }
+
+    public static function nonLingkungan(Request $request)
+    {
+        $datajemaats = data_jemaat::isActive()->lingkunganNull();
+
+        if($request->ajax()){  
+            return DataTables::of($datajemaats)
+                ->addColumn('jemaat_status_aktif', function($datajemaats) { return '<span class="label label-primary">Aktif</span>'; })
+                ->addColumn('action', function($data){
+                    $button = '<a href="'. Route('profiledetail', $data->id) .'" target="_blank" class="btn btn-icon btn-sm btn-primary" id="btnDetail" data-toggle="tooltip" data-placement="top" title="Lihat"><i class="fa fa-eye" style="width: 20px;"></i>Lihat</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="'. Route('jemaateditprofile', $data->id) .'" target="_blank" class="btn btn-icon btn-sm btn-warning" id="btnEdit" data-toggle="tooltip" data-placement="top" title="Edit"><i i class="fa fa-edit" style="width:20px"></i>Edit</a>';
+                    return $button;
+                })
+                ->rawColumns(['action','jemaat_status_aktif'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+            
+        return view('pages.jemaat.non_lingkungan');
+
+    }
 }

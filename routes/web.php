@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/tambah-jemaat', 'create')->name('tambahjemaat');
         Route::post('/tambah-jemaat', 'store')->name('tambahdatajemaat');
         Route::get('/data-jemaat/export','exportDataJemaat')->name('export.datajemaat');
+        Route::get('/data-jemaat/non-lingkungan', 'nonLingkungan')->name('jemaat.nonLingkungan');
     });
     
 
@@ -46,12 +47,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/data-jemaat-meninggal', 'JemaatInAktifController@meninggal')->name('datameninggal');
     Route::get('/data-jemaat-pindah', 'JemaatInAktifController@pindah')->name('datapindah');
 
-    Route::prefix('laporan')->group(function () {
-        Route::get('/tahunan', 'LaporanController@tahunan')->name('laporan.tahunan');
-        Route::get('/statistik', 'LaporanController@statistik')->name('laporan.statistik');
-        Route::get('/sidi','Laporan\SidiController')->name('laporan.sidi');
-        Route::get('/data-sidi','Laporan\SidiController@nama')->name('laporan.namasidi');
-        
+    Route::controller(LaporanController::class)->group(function() {
+        Route::get('/laporan/tahunan', 'tahunan')->name('laporan.tahunan');
+        Route::get('/laporan/statistik', 'statistik')->name('laporan.statistik');
+        Route::get('/laporan/sidi','Laporan\SidiController')->name('laporan.sidi');
+        Route::get('/laporan/data-sidi','Laporan\SidiController@nama')->name('laporan.namasidi');
     });
 
     Route::get('/rekap-lingkungan', 'RekapDataController@lingkungan');
