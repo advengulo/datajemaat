@@ -19,4 +19,11 @@ class DataKeluarga extends Model
     {
         return $this->belongsTo('\App\Models\data_jemaat', 'id_ibu', 'id');
     }
+
+    public function scopeFindByNoStambuk($q, $noStambuk)
+    {
+        if(!empty($noStambuk)){
+            return $q->where('no_stambuk', $noStambuk);
+        }
+    }
 }

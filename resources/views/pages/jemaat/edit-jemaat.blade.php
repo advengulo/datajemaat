@@ -108,8 +108,7 @@
                                                                         </div>
                                                                         <div class="col-md-3" style="padding-left:0">
                                                                             <div class="form-group">
-                                                                            {{-- <input style="border=0;" type="text" class="form-control" name="jemaat_tanggal_lahir" value="{{$data_jemaat->jemaat_tanggal_lahir}}"> --}}
-                                                                                <input class="datepicker form-control"  type="text" name="jemaat_tanggal_lahir" value="{{$data_jemaat->jemaat_tanggal_lahir->format('d/m/Y')}}"  required>
+                                                                                <input class="datepicker form-control"  type="text" name="jemaat_tanggal_lahir" value="{{$data_jemaat->jemaat_tanggal_lahir->format('d-m-Y')}}"  required>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -166,7 +165,7 @@
                                                                         <div class="col-md-8" style="padding-left:0">
                                                                             <div class="form-group">
                                                                                 {{-- <input style="border=0;" type="text" class="form-control" name="jemaat_tanggal_perkawinan" value="{{$data_jemaat->jemaat_tanggal_perkawinan}}"> --}}
-                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_perkawinan" value="@if($data_jemaat->jemaat_tanggal_perkawinan != null) {{$data_jemaat->jemaat_tanggal_perkawinan->format('d/m/Y')}} @endif" placeholder="-">
+                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_perkawinan" value="@if($data_jemaat->jemaat_tanggal_perkawinan != null) {{$data_jemaat->jemaat_tanggal_perkawinan->format('d-m-Y')}} @endif" placeholder="-">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -179,7 +178,7 @@
                                                                         <div class="col-md-8" style="padding-left:0">
                                                                             <div class="form-group">
                                                                                 {{-- <input style="border=0;" type="text" class="form-control" name="jemaat_tanggal_baptis" value="{{$data_jemaat->jemaat_tanggal_baptis}}"> --}}
-                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_baptis" value="@if($data_jemaat->jemaat_tanggal_baptis != null){{$data_jemaat->jemaat_tanggal_baptis->format('d/m/Y')}} @else - @endif" placeholder="-">
+                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_baptis" value="@if($data_jemaat->jemaat_tanggal_baptis != null){{$data_jemaat->jemaat_tanggal_baptis->format('d-m-Y')}} @endif" placeholder="-">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -192,7 +191,7 @@
                                                                         <div class="col-md-8" style="padding-left:0">
                                                                             <div class="form-group">
                                                                                 {{-- <input style="border=0;" type="text" class="form-control" name="jemaat_tanggal_sidi" value="{{$data_jemaat->jemaat_tanggal_sidi}}"> --}}
-                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_sidi" value="@if($data_jemaat->jemaat_tanggal_sidi != null){{$data_jemaat->jemaat_tanggal_sidi->format('d/m/Y')}} @endif" placeholder="-">
+                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_sidi" value="@if($data_jemaat->jemaat_tanggal_sidi != null){{$data_jemaat->jemaat_tanggal_sidi->format('d-m-Y')}} @endif" placeholder="-">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -205,7 +204,7 @@
                                                                         <div class="col-md-8" style="padding-left:0">
                                                                             <div class="form-group">
                                                                                 {{-- <input style="border=0;" type="text" class="form-control" name="jemaat_tanggal_bergabung" value="{{$data_jemaat->jemaat_tanggal_bergabung}}"> --}}
-                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_bergabung" value="{{$data_jemaat->jemaat_tanggal_bergabung->format('d/m/Y')}}" placeholder="-">
+                                                                                <input class="datepicker form-control" type="text" name="jemaat_tanggal_bergabung" value="{{$data_jemaat->jemaat_tanggal_bergabung->format('d-m-Y')}}" placeholder="-">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -478,7 +477,7 @@
 
     $('.datepicker').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         endDate: '+0d',
         autoclose: true
     }); 
