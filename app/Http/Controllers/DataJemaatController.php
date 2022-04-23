@@ -225,6 +225,9 @@ class DataJemaatController extends Controller
         DB::beginTransaction();
         try {
             $data_jemaat = data_jemaat::find($id);
+            //Cari apakah data tunggal, sehingga tidak perlu mengubah otomatis kepala keluarga
+            $isSingleData = data_jemaat::where('id_parent', $data_jemaat->id_parent)->where('jemaat_status_aktif', 't')
+                            ->count();
             $data_jemaat->jemaat_status_aktif = 'f';
             $data_jemaat->save();
             RiwayatInaktif::create([
@@ -234,37 +237,38 @@ class DataJemaatController extends Controller
                 'jemaat_tanggal_dikebumikan' => request('jemaat_tanggal_dikebumikan')
             ]);
 
-            //Cari apakah data tunggal, sehingga tidak perlu mengubah otomatis kepala keluarga
-            $isSingleData = data_jemaat::where('id_parent', $data_jemaat->id_parent)->where('jemaat_status_aktif', 't')
-                            ->count();
-
             if($isSingleData > 1){
                 if($data_jemaat->jemaat_status_dikeluarga == 1 && $data_jemaat->jemaat_status_perkawinan == 1){
                     $dataSI = data_jemaat::where('id_parent', $data_jemaat->id_parent)
                         ->where('jemaat_status_dikeluarga','2')    
                         ->first();
+
+                    if(!empty($dataSI)){
+                        if($dataSI->jemaat_jenis_kelamin == 'l'){
+                            $dataSI->jemaat_status_perkawinan = 3; //Duda
+                            $dataSI->save();
+                        }
+                        else{
+                            $dataSI->jemaat_status_perkawinan = 4; //Janda
+                            $dataSI->save();
+                        }
+                    }
                     
-                    if($dataSI->jemaat_jenis_kelamin == 'l'){
-                        $dataSI->jemaat_status_perkawinan = 3; //Duda
-                        $dataSI->save();
-                    }
-                    else{
-                        $dataSI->jemaat_status_perkawinan = 4; //Janda
-                        $dataSI->save();
-                    }
                 }
                 else if($data_jemaat->jemaat_status_dikeluarga == 2 && $data_jemaat->jemaat_status_perkawinan == 1){
                     $dataSI = data_jemaat::where('id_parent', $data_jemaat->id_parent)
                         ->where('jemaat_status_dikeluarga','1')    
                         ->first();
-                    
-                    if($dataSI->jemaat_jenis_kelamin == 'l'){
-                        $dataSI->jemaat_status_perkawinan = 3; //Duda
-                        $dataSI->save();
-                    }
-                    else{
-                        $dataSI->jemaat_status_perkawinan = 4; //Janda
-                        $dataSI->save();
+
+                    if(!empty($dataSI)){
+                        if($dataSI->jemaat_jenis_kelamin == 'l'){
+                            $dataSI->jemaat_status_perkawinan = 3; //Duda
+                            $dataSI->save();
+                        }
+                        else{
+                            $dataSI->jemaat_status_perkawinan = 4; //Janda
+                            $dataSI->save();
+                        }
                     }
                 }
     
@@ -272,7 +276,7 @@ class DataJemaatController extends Controller
                     $switchKK = data_jemaat::where('id_parent', $id)
                         ->where('jemaat_status_aktif', 't')
                         ->orderBy('jemaat_status_dikeluarga','asc')
-                        ->orderBy('jemaat_tanggal_lahir','desc')
+                        ->orderBy('jemaat_tanggal_lahir','asc')
                         ->first();
 
                     $isSibling = false;
