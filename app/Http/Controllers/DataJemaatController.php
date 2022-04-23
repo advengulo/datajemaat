@@ -238,7 +238,7 @@ class DataJemaatController extends Controller
             $isSingleData = data_jemaat::where('id_parent', $data_jemaat->id_parent)->where('jemaat_status_aktif', 't')
                             ->count();
 
-            if($isSingleData > 0){
+            if($isSingleData > 1){
                 if($data_jemaat->jemaat_status_dikeluarga == 1 && $data_jemaat->jemaat_status_perkawinan == 1){
                     $dataSI = data_jemaat::where('id_parent', $data_jemaat->id_parent)
                         ->where('jemaat_status_dikeluarga','2')    
