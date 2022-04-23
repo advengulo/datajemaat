@@ -144,10 +144,7 @@ class DataJemaatController extends Controller
             ->orderBy('jenis_pekerjaan', 'asc')->get();
         $data_keluarga = DataKeluarga::where('no_stambuk', '=', $no_stambuk)
             ->first();
-        // dd($data_keluarga);
         $dataKK = data_jemaat::where('jemaat_kk_status', true)->where('jemaat_status_aktif', 't')->get();
-
-
 
         return view('pages.jemaat.edit-jemaat', compact('data_jemaat', 'data_pendidikans','data_lingkungans', 'data_pekerjaans', 'data_keluarga','dataKK'));      
     }
@@ -341,10 +338,13 @@ class DataJemaatController extends Controller
 
     public static function nonLingkungan(Request $request)
     {
-        $datajemaats = data_jemaat::isActive()->lingkunganNull();
+        $datajemaats = data_jemaat::lingkunganNull()->isActive();
 
         if($request->ajax()){  
             return DataTables::of($datajemaats)
+                ->addColumn('kepala_keluarga', function($datajemaats) { 
+                    return $datajemaats->jemaat_kk_status ? "Ya" : "";
+                })
                 ->addColumn('jemaat_status_aktif', function($datajemaats) { return '<span class="label label-primary">Aktif</span>'; })
                 ->addColumn('action', function($data){
                     $button = '<a href="'. Route('profiledetail', $data->id) .'" target="_blank" class="btn btn-icon btn-sm btn-primary" id="btnDetail" data-toggle="tooltip" data-placement="top" title="Lihat"><i class="fa fa-eye" style="width: 20px;"></i>Lihat</a>';

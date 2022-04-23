@@ -45,7 +45,6 @@ class data_jemaat extends Model
     public function setJemaatTanggalPerkawinanAttribute($value)
     {
         if($value != null){
-            dd($value);
             $this->attributes['jemaat_tanggal_perkawinan'] = Helper::dateFormat($value);
         }
     }
@@ -74,14 +73,14 @@ class data_jemaat extends Model
         return $this->jemaat_tanggal_bergabung->year;
     }
 
-    public function scopeIsActive()
+    public function scopeIsActive($q)
     {
-        return $this->where('jemaat_status_aktif','t');
+        return $q->where('jemaat_status_aktif','t');
     }
 
-    public function scopeLingkunganNull()
+    public function scopeLingkunganNull($q)
     {
-        return $this->where('id_lingkungan', null);
+        return $q->where('id_lingkungan', null);
     }
 
     public function pendidikan()

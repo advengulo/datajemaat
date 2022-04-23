@@ -11,7 +11,7 @@ class DataJemaatRepository
         $dataKeluarga = DataKeluarga::findByNoStambuk($noStambuk)->first();
         $dataKeluarga->nama_ayah = $input['namaAyah'];
         $dataKeluarga->nama_ibu = $input['namaIbu'];
-        $dataKeluarga->update();
+        $dataKeluarga->save();
     }
     public function updateNoStambukInDataKeluarga($old, $new)
     {

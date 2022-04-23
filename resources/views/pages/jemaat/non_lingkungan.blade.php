@@ -11,6 +11,7 @@
                         <div class="main-sparkline13-hd">
                             <h1>Data Jemaat Non Lingkungan</h1>
                         </div>
+                        <p>Update lingkungan <b>Kepala Keluarga</b> agar semua anggota keluarga ikut terupdate</p>
                     </div>
                     <div class="sparkline13-graph">
                         <div class="table-responsive">
@@ -40,7 +41,7 @@
                                         <th>Nama</th>
                                         <th>Nama Alias</th>
                                         <th>Nomor Stambuk</th>
-                                        {{-- <th>Lingkungan </th> --}}
+                                        <th>Kepala Keluarga</th>
                                         <th>Status Jemaat</th>
                                         <th></th>
                                     </tr>
@@ -82,6 +83,10 @@
                 {
                     data: 'jemaat_nomor_stambuk',
                     name: 'jemaat_nomor_stambuk'
+                },
+                {
+                    data: 'kepala_keluarga',
+                    name: 'kepala_keluarga'
                 },
                 {
                     data: 'jemaat_status_aktif',

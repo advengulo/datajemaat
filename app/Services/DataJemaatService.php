@@ -28,7 +28,6 @@ class DataJemaatService
             $jemaat->jemaat_tanggal_baptis = Helper::dateFormat($input['jemaat_tanggal_baptis']);
             $jemaat->jemaat_tanggal_sidi = Helper::dateFormat($input['jemaat_tanggal_sidi']);
             $jemaat->jemaat_tanggal_bergabung = Helper::dateFormat($input['jemaat_tanggal_bergabung']);
-            $jemaat->jemaat_tanggal_bergabung = Helper::dateFormat($input['jemaat_tanggal_bergabung']);
             $jemaat->jemaat_tanggal_perkawinan = Helper::dateFormat($input['jemaat_tanggal_perkawinan']);
             $jemaat->save();
             $this->updateDataKeluarga($input, $jemaat->jemaat_nomor_stambuk);
@@ -44,7 +43,7 @@ class DataJemaatService
             }
     
             if($jemaat->jemaat_kk_status == true && $jemaat->wasChanged('id_lingkungan')){
-                $this->changeFamilyZone($id);
+                $this->changeFamilyZone($jemaat->id_parent, $input['id_lingkungan']);
             }
         } catch (Exception $e) {
             DB::rollBack();
@@ -77,12 +76,12 @@ class DataJemaatService
         return $nomorStambuk;
     }
 
-    public function changeFamilyZone($id)
+    public function changeFamilyZone($id, $id_lingkungan)
     {
-        $familys = $this->getFamilyData($id);
+        $familys = $this->getFamilyData($id)->get();
         foreach($familys as $fam){
             $fam->update([
-                'id_lingkungan' => request('id_lingkungan'),
+                'id_lingkungan' => $id_lingkungan,
             ]);
         }
     }

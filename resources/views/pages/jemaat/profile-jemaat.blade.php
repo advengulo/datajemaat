@@ -401,7 +401,7 @@
                                                                 </div>
                                                                 <div class="col-md-8" style="padding-left:0">
                                                                     <div class="form-group">
-                                                                        <input style="border=0; background-color:white" readonly="readonly" type="text" class="form-control" value="{{$data_jemaat->id_lingkungan}} - {{$data_jemaat->lingkungan->nama_lingkungan}} ">
+                                                                        <input style="border=0; background-color:white" readonly="readonly" type="text" class="form-control" value="{{$data_jemaat->id_lingkungan ?? ""}} - {{$data_jemaat->lingkungan->nama_lingkungan ?? ""}} ">
                                                                     </div>
                                                                 </div>
                                                             </div>
