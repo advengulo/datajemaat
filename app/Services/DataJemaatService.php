@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\data_jemaat;
 use DB, Helper;
+use App\Models\data_jemaat;
+use Illuminate\Http\Request;
 use App\Repositories\DataJemaatRepository;
 
 
@@ -16,42 +17,26 @@ class DataJemaatService
         $this->jemaatRepo = $jemaatRepo;
     }
 
-    public function updateDataJemaat($input, $id)
+    public function updateDataJemaat(Request $request, $id)
     {
-        $jemaat = data_jemaat::find($id);
+        $input = $request->all();
+        
+        $jemaat = $this->jemaatRepo->updateDataJemaat($input, $id);
 
-        DB::beginTransaction();
+        if($jemaat->wasChanged('jemaat_tanggal_lahir') || $jemaat->wasChanged('jemaat_tanggal_baptis') || $jemaat->wasChanged('jemaat_jenis_kelamin')){
+            // Generate new nomor stambuk
+            $newNomorStambuk = $this->generateNomorStambuk($input);
 
-        try {
-            $jemaat->fill($input);
-            $jemaat->jemaat_tanggal_lahir = Helper::dateFormat($input['jemaat_tanggal_lahir']);
-            $jemaat->jemaat_tanggal_baptis = Helper::dateFormat($input['jemaat_tanggal_baptis']);
-            $jemaat->jemaat_tanggal_sidi = Helper::dateFormat($input['jemaat_tanggal_sidi']);
-            $jemaat->jemaat_tanggal_bergabung = Helper::dateFormat($input['jemaat_tanggal_bergabung']);
-            $jemaat->jemaat_tanggal_perkawinan = Helper::dateFormat($input['jemaat_tanggal_perkawinan']);
-            $jemaat->save();
-            $this->updateDataKeluarga($input, $jemaat->jemaat_nomor_stambuk);
+            // Update nomor stambuk in table Data_Jemaat
+            $this->jemaatRepo->updateNomorStambuk($id, $newNomorStambuk);
 
-            if($jemaat->wasChanged('jemaat_tanggal_lahir') || $jemaat->wasChanged('jemaat_tanggal_baptis') || $jemaat->wasChanged('jemaat_jenis_kelamin')){
-                // Generate new nomor stambuk
-                $noStambukNew = $this->generateNomorStambuk($input);
-                $jemaat->jemaat_nomor_stambuk = $noStambukNew;
-                $jemaat->save();
-    
-                // Update nomor stambuk in table DataKeluarga
-                $this->updateStambukDataKeluarga($input['jemaat_nomor_stambuk'], $noStambukNew);
-            }
-    
-            if($jemaat->jemaat_kk_status == true && $jemaat->wasChanged('id_lingkungan')){
-                $this->changeFamilyZone($jemaat->id_parent, $input['id_lingkungan']);
-            }
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            throw new InvalidArgumentException('Data tidak dapat diubah');
+            // Update nomor stambuk in table DataKeluarga
+            $this->jemaatRepo->updateNoStambukInDataKeluarga($input['jemaat_nomor_stambuk'], $newNomorStambuk);
         }
 
-        DB::commit();
+        if($jemaat->jemaat_kk_status == true && $jemaat->wasChanged('id_lingkungan')){
+            $this->changeFamilyZone($jemaat->id_parent, $input['id_lingkungan']);
+        }
 
         return $jemaat;
     }
@@ -95,16 +80,6 @@ class DataJemaatService
         }
 
         return true;
-    }
-
-    public function updateStambukDataKeluarga($old, $new)
-    {
-        return $this->jemaatRepo->updateNoStambukInDataKeluarga($old, $new);
-    }
-
-    public function updateDataKeluarga($input, $noStambuk)
-    {
-        return $this->jemaatRepo->updateDataKeluarga($input, $noStambuk);
     }
 
     private function getFamilyData($id)

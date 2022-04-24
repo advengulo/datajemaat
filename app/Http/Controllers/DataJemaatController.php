@@ -151,8 +151,7 @@ class DataJemaatController extends Controller
 
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        $jemaat = $this->jemaatSrv->updateDataJemaat($input, $id);
+        $jemaat = $this->jemaatSrv->updateDataJemaat($request, $id);
 
         if(!$jemaat->wasChanged()){
             return back()->with(['update' => 'Tidak ada perubahan']);
