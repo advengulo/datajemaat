@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
+use Illuminate\Support\ServiceProvider;
+use App\Http\Controllers\NotifikasiController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,14 @@ class AppServiceProvider extends ServiceProvider
     {
         setlocale(LC_ALL, 'id_ID.UTF-8');
         Carbon::setLocale('id_ID.UTF-8');
+
+        view()->composer('layouts.app', function($view)
+        {
+            $notifikasiController = new NotifikasiController;
+            $notif = $notifikasiController->index();
+            // dd($notif['nonLingkungan']);
+
+            $view->with('notif', $notif);
+        });
     }
 }
