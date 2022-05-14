@@ -4,21 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\data_jemaat;
-use Carbon\Carbon;
 use DataTables;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 
 class DataWarningController extends Controller
 {
     public function tanggalLahir(Request $request)
     {
         //find data jemaat ketika tanggal lahir kurang dari tahun 1940 dan lebih dari tanggal hari ini
-        $datajemaats = data_jemaat::where('jemaat_tanggal_lahir', '<', '1940-01-01')
-            ->orWhere('jemaat_tanggal_lahir', '>', Carbon::now())
-            ->where('jemaat_status_aktif', 't')
-            ->get();
+        $datajemaats = data_jemaat::getWarningTanggalLahir()->get();
 
         //return data to Datatable serverside
         if($request->ajax()){  
@@ -43,15 +36,12 @@ class DataWarningController extends Controller
 
         return view('pages.data-warning.tanggal-lahir');
     }
+
     public function duplicate(Request $request)
     {
         //find data jemaat ketika nama dan tanggal lahir sama
-        $data = DB::table('data_jemaats')
-            ->select('jemaat_nama', 'jemaat_tanggal_lahir', (DB::raw('COUNT(*)')))
-            ->where('jemaat_status_aktif', 't')
-            ->groupBy('jemaat_nama', 'jemaat_tanggal_lahir')
-            ->havingRaw('COUNT(jemaat_nama) > 1')
-            ->get();
+        $data = data_jemaat::getDuplicateData()->get();
+
 
         $datajemaats= collect();
 
@@ -67,7 +57,7 @@ class DataWarningController extends Controller
         if($request->ajax()){  
             return DataTables::of($datajemaats)
                 ->editColumn('lingkungan', function($datajemaats) { 
-                    return $datajemaats->id_lingkungan . ' - ' . $datajemaats->lingkungan->nama_lingkungan ;
+                    return $datajemaats->id_lingkungan;
                 })
                 ->editColumn('jemaat_tanggal_lahir', function($datajemaats) {
                     return $datajemaats->jemaat_tanggal_lahir->format('Y-m-d');
@@ -85,9 +75,5 @@ class DataWarningController extends Controller
         }
 
         return view('pages.data-warning.data-ganda');
-    }
-    public function tunggal(Request $request)
-    {
-        
     }
 }
