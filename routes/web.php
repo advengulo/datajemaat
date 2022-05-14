@@ -12,8 +12,8 @@
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('/','HomeController');
-    
+    Route::resource('/', 'HomeController');
+
     Route::controller(DataJemaatController::class)->group(function () {
         Route::get('/data-jemaat', 'index')->name('datajemaat');
         Route::get('/data-jemaat/profile/{data_jemaat}', 'show')->name('profiledetail');
@@ -25,20 +25,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('/data-jemaat/profile/{id}/update4', 'jadikankk')->name('jadikankk');
         Route::get('/tambah-jemaat', 'create')->name('tambahjemaat');
         Route::post('/tambah-jemaat', 'store')->name('tambahdatajemaat');
-        Route::get('/data-jemaat/export','exportDataJemaat')->name('export.datajemaat');
+        Route::get('/data-jemaat/export', 'exportDataJemaat')->name('export.datajemaat');
         Route::get('/data-jemaat/non-lingkungan', 'nonLingkungan')->name('jemaat.nonLingkungan');
     });
-    
+
 
     Route::controller(KepalaKeluargaController::class)->group(function () {
         Route::get('/data-kepala-keluarga', 'index')->name('data-kk');
         Route::get('/data-kepala-keluarga/export', 'exportDataKK')->name('export.dataKK');
     });
 
-    Route::get('/import-data','ImportExportController@importIndex')->name('import.index');
-    Route::post('/import','ImportExportController@import')->name('import.datajemaat');
-    
-    
+    Route::get('/import-data', 'ImportExportController@importIndex')->name('import.index');
+    Route::post('/import', 'ImportExportController@import')->name('import.datajemaat');
+
+
     Route::get('/kartu-jemaat', 'KartuJemaatController@index')->name('kartujemaat');
     Route::post('/kartu-jemaat/download-all', 'KartuJemaatController@downloadZip')->name('download.all');
     Route::get('/kartu-jemaat/{data_jemaat}', 'KartuJemaatController@show')->name('lihatdatakk');
@@ -47,11 +47,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/data-jemaat-meninggal', 'JemaatInAktifController@meninggal')->name('datameninggal');
     Route::get('/data-jemaat-pindah', 'JemaatInAktifController@pindah')->name('datapindah');
 
-    Route::controller(LaporanController::class)->group(function() {
+    Route::controller(LaporanController::class)->group(function () {
         Route::get('/laporan/tahunan', 'tahunan')->name('laporan.tahunan');
         Route::get('/laporan/statistik', 'statistik')->name('laporan.statistik');
-        Route::get('/laporan/sidi','Laporan\SidiController')->name('laporan.sidi');
-        Route::get('/laporan/data-sidi','Laporan\SidiController@nama')->name('laporan.namasidi');
+        Route::get('/laporan/sidi', 'Laporan\SidiController')->name('laporan.sidi');
+        Route::get('/laporan/data-sidi', 'Laporan\SidiController@nama')->name('laporan.namasidi');
     });
 
     Route::get('/rekap-lingkungan', 'RekapDataController@lingkungan');
@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/grafik-pekerjaan', 'GrafikController@pekerjaan');
     Route::get('/grafik-jemaat-bergabung', 'GrafikController@jemaatbergabung');
 
-    Route::controller(LingkunganMasterController::class)->group(function(){
+    Route::controller(LingkunganMasterController::class)->group(function () {
         Route::get('/data-lingkungan', 'index')->name('datalingkungan');
         Route::post('/data-lingkungan', 'store')->name('lingkungan.store');
         Route::patch('/data-lingkungan/update/{id}', 'update')->name('lingkungan.update');
@@ -85,8 +85,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/data-ganda', 'DataWarningController@duplicate')->name('warning.data-ganda');
     });
 
-    Route::post('/data-keluarga/{id}','DataJemaatController@updateDataKeluarga')->name('update.data-keluarga');
+    Route::post('/data-keluarga/{id}', 'DataJemaatController@updateDataKeluarga')->name('update.data-keluarga');
+
+    Route::controller(NotifikasiController::class)->group(function () {
+        Route::get('/notifikasi/non-lingkungan', 'index')->name('notif.non-lingkungan');
+    });
 });
 
 Auth::routes();
-

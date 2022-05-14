@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class data_jemaat extends Model
 {
@@ -114,4 +116,18 @@ class data_jemaat extends Model
         return $this->belongsTo('\App\Models\RiwayatInaktif', 'jemaat_nomor_stambuk', 'no_stambuk');
     }
 
+    public function scopeGetWarningTanggalLahir($query)
+    {
+        return $query->where('jemaat_tanggal_lahir', '<', '1940-01-01')
+            ->orWhere('jemaat_tanggal_lahir', '>', Carbon::now())
+            ->where('jemaat_status_aktif', 't');
+    }
+
+    public function scopeGetDuplicateData($query)
+    {
+        return $query->select('jemaat_nama', 'jemaat_tanggal_lahir', (DB::raw('COUNT(*)')))
+            ->where('jemaat_status_aktif', 't')
+            ->groupBy('jemaat_nama', 'jemaat_tanggal_lahir')
+            ->havingRaw('COUNT(jemaat_nama) > 1');
+    }
 }

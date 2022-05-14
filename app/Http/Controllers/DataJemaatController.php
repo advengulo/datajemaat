@@ -72,53 +72,8 @@ class DataJemaatController extends Controller
 
     public function store(DataJemaatStore $request)
     {
-        $idParent=(data_jemaat::orderBy('id', 'desc')->first()->id)+1;
-        $nomorstambuk = $this->jemaatSrv->generateNomorStambuk($request);
+        $jemaat = $this->jemaatSrv->storeDataJemaat($request);
 
-        DB::beginTransaction();
-        try {
-            data_jemaat::create([
-                'jemaat_nomor_stambuk' => $nomorstambuk,
-                'jemaat_nama' => request('jemaat_nama'),
-                'jemaat_gelar_depan' => request('jemaat_gelar_depan'),
-                'jemaat_gelar_belakang' => request('jemaat_gelar_belakang'),
-                'jemaat_nama_alias' => request('jemaat_nama_alias'),
-                'jemaat_tempat_lahir' => request('jemaat_tempat_lahir'),
-                'jemaat_tanggal_lahir' => $this->transformDate($request->jemaat_tanggal_lahir),
-                'jemaat_jenis_kelamin' => request('jemaat_jenis_kelamin'),
-                'jemaat_status_perkawinan' => request('jemaat_status_perkawinan'),
-                'jemaat_tanggal_perkawinan' => $this->transformDate($request->jemaat_tanggal_perkawinan),
-                'jemaat_tanggal_baptis' => $this->transformDate($request->jemaat_tanggal_baptis),
-                'jemaat_tanggal_sidi' => $this->transformDate($request->jemaat_tanggal_sidi),            
-                'jemaat_tanggal_bergabung' => $this->transformDate($request->jemaat_tanggal_bergabung) ?? "2018-12-31",
-                'id_pendidikan_akhir' => request('id_pendidikan_akhir'),
-                'id_lingkungan' => request('id_lingkungan'),
-                'jemaat_alamat_rumah' => request('jemaat_alamat_rumah'),
-                'jemaat_nomor_hp' => request('jemaat_nomor_hp'),
-                'jemaat_email' => request('jemaat_email'),
-                'id_pekerjaan' => request('id_pekerjaan'),
-                'jemaat_status_dikeluarga' => request('jemaat_status_dikeluarga'),
-                'jemaat_status_aktif' => "t",
-                'id_parent' => request('id_parent', $idParent),
-                'jemaat_kk_status' => request('jemaat_kk_status', '0'),
-                'jemaat_golongan_darah' => request('jemaat_golongan_darah'),
-            ]);
-
-            DataKeluarga::create([
-                'no_stambuk' => $nomorstambuk,
-                'nama_ayah' => $request->namaAyah,
-                'id_ayah' => $request->id_ayah,
-                'nama_ibu' => $request->namaIbu,
-                'id_ibu' => $request->id_ibu,
-                'status_hubungan' => 1,
-            ]);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            return back()->with(['error' => 'Error ada kesalahan perubahan data']);
-        }
-        
         return redirect()->route('datajemaat')->with(['success' => 'Data Jemaat berhasil di Tambahkan']);
     }
 

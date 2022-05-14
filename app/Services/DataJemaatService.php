@@ -17,7 +17,15 @@ class DataJemaatService
         $this->jemaatRepo = $jemaatRepo;
     }
 
-    public function updateDataJemaat(Request $request, $id)
+    public function storeDataJemaat($request)
+    {
+        $nomorstambuk = $this->generateNomorStambuk($request);
+        $jemaat = $this->jemaatRepo->storeDataJemaat($request, $nomorstambuk);
+
+        return $jemaat;
+    }
+
+    public function updateDataJemaat($request, $id)
     {
         $input = $request->all();
         
