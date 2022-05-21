@@ -65,8 +65,8 @@ class DataJemaatExport implements FromCollection, WithHeadings, WithMapping, Wit
             'JENIS KELAMIN',
             'TEMPAT LAHIR',
             'TANGGAL LAHIR',
-            'BAPTIS',
-            'SIDI',
+            'TANGGAL BAPTIS',
+            'TANGGAL SIDI',
             'STATUS PERKAWINAN',
             'TANGGAL PERKAWINAN',
             'PEKERJAAN',
@@ -80,11 +80,10 @@ class DataJemaatExport implements FromCollection, WithHeadings, WithMapping, Wit
     public function columnFormats(): array
     {
         return [
-            'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'H' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'I' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'J' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'K' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'L' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'N' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
