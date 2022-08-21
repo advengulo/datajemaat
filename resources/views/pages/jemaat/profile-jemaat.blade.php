@@ -475,7 +475,8 @@
                                                                             @elseif ($data_jemaat->jemaat_status_dikeluarga == 2) Istri
                                                                             @elseif ($data_jemaat->jemaat_status_dikeluarga == 3) Anak
                                                                             @elseif ($data_jemaat->jemaat_status_dikeluarga == 4) Famili
-                                                                            @elseif ($data_jemaat->jemaat_status_dikeluarga == 5) Adik Kandung
+                                                                            @elseif ($data_jemaat->jemaat_status_dikeluarga == 5) Saudara Kandung
+                                                                            @elseif ($data_jemaat->jemaat_status_dikeluarga == 6) Orang Tua
                                                                             @endif">
                                                                     </div>
                                                                 </div>

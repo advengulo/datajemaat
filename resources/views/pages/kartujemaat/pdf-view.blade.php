@@ -193,6 +193,7 @@
                         @elseif ($dataKartuKeluarga->jemaat_status_dikeluarga == 3) ANAK
                         @elseif ($dataKartuKeluarga->jemaat_status_dikeluarga == 4) FAMILI
                         @elseif ($dataKartuKeluarga->jemaat_status_dikeluarga == 5) SAUDARA KANDUNG
+                        @elseif ($dataKartuKeluarga->jemaat_status_dikeluarga == 6) ORANG TUA
                     @endif
                 </td>
                 <td @if($dataKartuKeluarga->jemaat_nama_alias != null) rowspan="2" @endif>@if($dataKartuKeluarga->jemaat_jenis_kelamin == "l") LAKI-LAKI
