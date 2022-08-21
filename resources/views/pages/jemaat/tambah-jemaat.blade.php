@@ -266,8 +266,9 @@
                                                                 <option value="1" {{ old('jemaat_status_dikeluarga') == 1 ? 'selected' : '' }}>Kepala Keluarga</option>
                                                                 <option value="2" {{ old('jemaat_status_dikeluarga') == 2 ? 'selected' : '' }}>Istri</option>
                                                                 <option value="3" {{ old('jemaat_status_dikeluarga') == 3 ? 'selected' : '' }}>Anak</option>
-                                                                <option value="5" {{ old('jemaat_status_dikeluarga') == 5 ? 'selected' : '' }}>Saudara Kandung</option>
                                                                 <option value="4" {{ old('jemaat_status_dikeluarga') == 4 ? 'selected' : '' }}>Famili</option>
+                                                                <option value="5" {{ old('jemaat_status_dikeluarga') == 5 ? 'selected' : '' }}>Saudara Kandung</option>
+                                                                <option value="6" {{ old('jemaat_status_dikeluarga') == 6 ? 'selected' : '' }}>Orang Tua</option>
                                                             </select>
                                                         </div>
                                                     </div>

@@ -406,8 +406,9 @@
                                                                                 <option @if($data_jemaat->jemaat_status_dikeluarga == "1") selected="" @endif value="1">Kepala Keluarga</option>
                                                                                 <option @if($data_jemaat->jemaat_status_dikeluarga == "2") selected="" @endif value="2">Istri</option>
                                                                                 <option @if($data_jemaat->jemaat_status_dikeluarga == "3") selected="" @endif value="3">Anak</option>
-                                                                                <option @if($data_jemaat->jemaat_status_dikeluarga == "4") selected="" @endif value="4">Adik Kandung</option>
-                                                                                <option @if($data_jemaat->jemaat_status_dikeluarga == "5") selected="" @endif value="5">Famili</option>
+                                                                                <option @if($data_jemaat->jemaat_status_dikeluarga == "4") selected="" @endif value="4">Famili</option>
+                                                                                <option @if($data_jemaat->jemaat_status_dikeluarga == "5") selected="" @endif value="5">Saudara Kandung</option>
+                                                                                <option @if($data_jemaat->jemaat_status_dikeluarga == "6") selected="" @endif value="6">Orang Tua</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
