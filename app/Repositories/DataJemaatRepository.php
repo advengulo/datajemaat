@@ -38,7 +38,11 @@ class DataJemaatRepository
                 'jemaat_golongan_darah' => $request->jemaat_golongan_darah,
             ]);
 
-            $jemaat->id_parent = $jemaat->id;
+            $jemaat->id_parent = $request->id_parent;
+            if ($request->jemaat_kk_status == true) {
+                $jemaat->id_parent = $jemaat->id;
+            }
+
             $jemaat->save();
 
             DataKeluarga::create([
