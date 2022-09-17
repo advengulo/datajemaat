@@ -28,10 +28,10 @@ class DataJemaatService
     public function updateDataJemaat($request, $id)
     {
         $input = $request->all();
-        
+
         $jemaat = $this->jemaatRepo->updateDataJemaat($input, $id);
 
-        if($jemaat->wasChanged('jemaat_tanggal_lahir') || $jemaat->wasChanged('jemaat_tanggal_baptis') || $jemaat->wasChanged('jemaat_jenis_kelamin')){
+        if ($jemaat->wasChanged('jemaat_tanggal_lahir') || $jemaat->wasChanged('jemaat_tanggal_baptis') || $jemaat->wasChanged('jemaat_jenis_kelamin')) {
             // Generate new nomor stambuk
             $newNomorStambuk = $this->generateNomorStambuk($input);
 
@@ -42,8 +42,12 @@ class DataJemaatService
             $this->jemaatRepo->updateNoStambukInDataKeluarga($input['jemaat_nomor_stambuk'], $newNomorStambuk);
         }
 
-        if($jemaat->jemaat_kk_status == true && $jemaat->wasChanged('id_lingkungan')){
-            $this->changeFamilyZone($jemaat->id_parent, $input['id_lingkungan']);
+        if ($jemaat->jemaat_kk_status == true && $jemaat->wasChanged('id_lingkungan')) {
+            data_jemaat::getChildByParentId($jemaat->id_parent)->update(['id_lingkungan' => $input['id_lingkungan']]);
+        }
+
+        if ($jemaat->jemaat_kk_status == true && $jemaat->wasChanged('jemaat_alamat_rumah')) {
+            data_jemaat::getChildByParentId($jemaat->id_parent)->update(['jemaat_alamat_rumah' => $input['jemaat_alamat_rumah']]);
         }
 
         return $jemaat;
@@ -52,60 +56,20 @@ class DataJemaatService
     public function generateNomorStambuk($input)
     {
         $nomorStambuk = "";
-        $checkIfExist = false;
+        $isExistNomorStambuk = false;
         $tempIncr = 0;
-        $jenisKelamin = $this->intGender($input['jemaat_jenis_kelamin']);
+        $jenisKelamin = Helper::transformGenderToInt($input['jemaat_jenis_kelamin']);
         $tanggalLahir = Helper::yearMonthDayDateFormat($input['jemaat_tanggal_lahir']);
         $tanggalBaptis = Helper::yearMonthDateFormat($input['jemaat_tanggal_baptis']);
-        $increment = $this->incrementPadRight($tempIncr, 3);
+        $increment = Helper::incrementPadRight($tempIncr, 3);
 
         do {
             $tempIncr++;
-            $increment = $this->incrementPadRight($tempIncr, 3);
+            $increment = Helper::incrementPadRight($tempIncr, 3);
             $nomorStambuk = $tanggalLahir . $tanggalBaptis . $jenisKelamin . $increment;
-            $checkIfExist = $this->checkIfExistNomorStambuk($nomorStambuk);
-        } while ($checkIfExist != false);
+            $isExistNomorStambuk = Helper::checkIfExistNomorStambuk($nomorStambuk);
+        } while ($isExistNomorStambuk);
 
         return $nomorStambuk;
-    }
-
-    public function changeFamilyZone($id, $id_lingkungan)
-    {
-        $familys = $this->getFamilyData($id)->get();
-        foreach($familys as $fam){
-            $fam->update([
-                'id_lingkungan' => $id_lingkungan,
-            ]);
-        }
-    }
-
-    public function checkIfExistNomorStambuk($nomorStambuk)
-    {
-        $check =  data_jemaat::where('jemaat_nomor_stambuk', $nomorStambuk)->first();
-
-        if(empty($check)){
-            return false;
-        }
-
-        return true;
-    }
-
-    private function getFamilyData($id)
-    {
-        return data_jemaat::getChildByParentId($id);
-    }
-
-    private function intGender($gender)
-    {
-        if($gender == "p"){
-            return 2;
-        }
-
-        return 1;
-    }
-
-    private function incrementPadRight($number, $lenght)
-    {
-        return str_pad($number, $lenght, "0", STR_PAD_LEFT);
     }
 }

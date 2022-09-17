@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class data_jemaat extends Model
 {
+    public const LAKI_LAKI = 1;
+    public const PEREMPUAN = 2;
 
     protected $fillable = [
         'id','jemaat_nomor_stambuk','jemaat_nama','jemaat_gelar_depan','jemaat_gelar_belakang','jemaat_nama_alias','jemaat_tempat_lahir','jemaat_tanggal_lahir','jemaat_jenis_kelamin','jemaat_tanggal_baptis','jemaat_tanggal_sidi','jemaat_status_perkawinan','jemaat_tanggal_perkawinan','id_pendidikan_akhir','id_lingkungan','jemaat_tanggal_bergabung','jemaat_alamat_rumah','jemaat_nomor_hp','jemaat_email','jemaat_status_aktif','id_pekerjaan','jemaat_status_dikeluarga','id_parent','jemaat_golongan_darah','jemaat_kk_status',

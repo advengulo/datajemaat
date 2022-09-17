@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\data_jemaat;
+
 class Helper
 {
     public static function dateFormat($value)
@@ -27,5 +29,30 @@ class Helper
         }
 
         return '000000';
+    }
+
+    public static function incrementPadRight($number, $lenght)
+    {
+        return str_pad($number, $lenght, "0", STR_PAD_LEFT);
+    }
+
+    public static function transformGenderToInt($gender)
+    {
+        if($gender == "p"){
+            return data_jemaat::PEREMPUAN;
+        }
+
+        return data_jemaat::LAKI_LAKI;
+    }
+
+    public static function checkIfExistNomorStambuk($nomorStambuk)
+    {
+        $check =  data_jemaat::where('jemaat_nomor_stambuk', $nomorStambuk)->first();
+
+        if(empty($check)){
+            return false;
+        }
+
+        return true;
     }
 }
