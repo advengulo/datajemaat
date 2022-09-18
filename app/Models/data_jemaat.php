@@ -53,15 +53,17 @@ class data_jemaat extends Model
         }
     }
 
-    public function getAge(){        
-        if($this->jemaat_keterangan_status=='Meninggal'){
-            $diff  = date_diff( $this->jemaat_tanggal_lahir, $this->jemaat_tanggal_status->addDay() );
+    public function getAge(){ 
+        $data = Helper::isJemaatPassedAway($this->jemaat_nomor_stambuk);
+
+        if($data){
+            $diff  = date_diff($this->jemaat_tanggal_lahir, $data->jemaat_tanggal_status );
            
-            return $diff->format('%y Tahun, %m Bulan, %d Hari');
+            return $diff->format('%y Tahun, %m Bulan, %d Hari / Meninggal');
         }
-        else
-            return $this->jemaat_tanggal_lahir->diff(Carbon::now())
-                ->format('%y Tahun, %m Bulan, %d Hari');
+
+        return $this->jemaat_tanggal_lahir->diff(Carbon::now())
+            ->format('%y Tahun, %m Bulan, %d Hari');
     }
 
     public function scopeGetChildByParentId($q, $id)

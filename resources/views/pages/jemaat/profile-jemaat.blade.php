@@ -108,7 +108,7 @@
                                                         <div class="col-md-12">
                                                             <div class="row">
                                                                 <div class="col-md-2 col-md-offset-2">
-                                                                    <a href="#" data-toggle="modal" data-target="#jadikankkmodal"> <button type="button" class="btn btn-info btn-block">Jadikan KK</button></a>
+                                                                    <a href="#" data-toggle="modal" data-target="#jadikankkmodal"> <button type="button" {{ $data_jemaat->jemaat_kk_status == true ? 'disabled' : '' }} class="btn btn-info btn-block">Jadikan KK</button></a>
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <a href={{ route('jemaateditprofile', $data_jemaat) }}> <button type="button" class="btn btn-warning btn-block">Edit</button></a>

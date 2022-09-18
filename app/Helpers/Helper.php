@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\data_jemaat;
+use App\Models\RiwayatInaktif;
 
 class Helper
 {
@@ -54,5 +55,17 @@ class Helper
         }
 
         return true;
+    }
+
+    public static function isJemaatPassedAway($nomorStambuk)
+    {
+        $data = RiwayatInaktif::where('no_stambuk', $nomorStambuk)
+            ->where('jemaat_keterangan_status', 'Meninggal')->first();
+
+        if(empty($data)){
+            return false;
+        }
+
+        return $data;
     }
 }
