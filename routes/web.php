@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/tambah-jemaat', 'store')->name('tambahdatajemaat');
         Route::get('/data-jemaat/export', 'exportDataJemaat')->name('export.datajemaat');
         Route::get('/data-jemaat/non-lingkungan', 'nonLingkungan')->name('jemaat.nonLingkungan');
+        Route::get('/data-jemaat-ajax', 'ajax')->name('datajemaat.ajax');
     });
 
 

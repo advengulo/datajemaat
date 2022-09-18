@@ -71,7 +71,7 @@
             processing: true,
             serverSide: true, //aktifkan server-side 
             ajax: {
-                url: "{{ route('datajemaat') }}",
+                url: "{{ route('datajemaat.ajax') }}",
                 type: 'GET',
             },
             columns: [{
