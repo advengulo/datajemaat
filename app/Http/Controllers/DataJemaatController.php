@@ -77,7 +77,7 @@ class DataJemaatController extends Controller
 
     public function store(DataJemaatStore $request)
     {
-        $jemaat = $this->jemaatSrv->storeDataJemaat($request);
+        $this->jemaatSrv->storeDataJemaat($request);
 
         return redirect()->route('datajemaat')->with(['success' => 'Data Jemaat berhasil di Tambahkan']);
     }
@@ -138,15 +138,6 @@ class DataJemaatController extends Controller
             'jemaat_status_aktif' => "del",
         ]);
         return redirect()->route('datajemaat')->with(['delete' => 'Data Jemaat berhasil di hapus']);
-    }
-
-    public function transformDate($date)
-    {
-        if($date == null){
-            return null;
-        }
-        $time = strtotime(str_replace('/', '-', $date));
-        return date('Y-m-d',$time);
     }
 
     public function updateStatusPindah(Request $request, $id)
