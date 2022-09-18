@@ -109,10 +109,20 @@ class DataJemaatController extends Controller
         $jemaat = $this->jemaatSrv->updateDataJemaat($request, $id);
 
         if(!$jemaat->wasChanged()){
-            return back()->with(['update' => 'Tidak ada perubahan']);
+            return back()->with([
+                'update' => [
+                    'type' => 'warning',
+                    'message' => 'Tidak ada perubahan'
+                ]
+            ]);
         }
 
-        return back()->with(['update' => 'Data Jemaat berhasil di ubah']);
+        return back()->with([
+            'update' => [
+                'type' => 'info',
+                'message' => 'Data Jemaat berhasil di ubah'
+            ]
+        ]);
     }
 
     public function destroy(data_jemaat $data_jemaat, $id)

@@ -8,11 +8,11 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="product-payment-inner-st">
                     <div class="row">
-                        @if ($message = Session::get('update'))
+                        @if ($data = Session::get('update'))
                             <div class="col-md-12">
-                                <div class="alert alert-info alert-block">
+                                <div class="alert alert-{{ $data['type'] }} alert-block">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <strong>{{ $message }}</strong>
+                                    <strong>{{ $data['message'] }}</strong>
                                 </div>
                             </div>
                         @endif
