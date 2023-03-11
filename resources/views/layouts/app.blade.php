@@ -155,7 +155,7 @@
                                 <li class="{{Request::is("data-jemaat")?'active':''}} || {{Request::is("data-jemaat/profile/*")?'active':''}}"><a title="Data Jemaat" href={{asset('/data-jemaat')}}><span class="mini-sub-pro">Data Jemaat</span></a></li>                            
                                 <li class="{{Request::is("tambah-jemaat")?'active':''}}"><a title="Tambah Jemaat" href={{asset('/tambah-jemaat')}}><span class="mini-sub-pro">Tambah Jemaat</span></a></li>
                                 <li class="{{Request::is("data-kepala-keluarga")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>                            
-                                <li class="{{Request::is("data-jemaat/non-lingkungan")?'active':''}}"><a title="Data Kepala Keluarga" href={{url('/data-jemaat/non-lingkungan')}}><span class="mini-sub-pro">Non Lingkungan {!! $notif['nonLingkungan'] !!} </span></a></li>                            
+                                <li class="{{Request::is("data-jemaat/non-lingkungan")?'active':''}}"><a title="Data Kepala Keluarga" href={{url('/data-jemaat/non-lingkungan')}}><span class="mini-sub-pro">Simpatisan {!! $notif['nonLingkungan'] !!} </span></a></li>                            
                             </ul>
                         </li>
                         <li class="{{Request::is("kartu-jemaat")?'active':''}}" >

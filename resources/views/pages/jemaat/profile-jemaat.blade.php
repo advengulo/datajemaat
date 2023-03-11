@@ -119,7 +119,7 @@
                                                                             <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
                                                                             <li><a href="#" data-toggle="modal" data-target="#PrimaryModalalert">Pindah</a></li>
-                                                                            <li><a href="#" data-toggle="modal" data-target="#DangerModalalert">Meninggal</a></li>                                                                            
+                                                                            <li><a href="#" data-toggle="modal" data-target="#DangerModalalert">Meninggal</a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>

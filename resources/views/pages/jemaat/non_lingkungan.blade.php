@@ -9,7 +9,7 @@
                 <div class="sparkline13-list">
                     <div class="sparkline13-hd">
                         <div class="main-sparkline13-hd">
-                            <h1>Data Jemaat Non Lingkungan</h1>
+                            <h1>Data Jemaat Simpatisan</h1>
                         </div>
                         <p>Update lingkungan <b>Kepala Keluarga</b> agar semua anggota keluarga ikut terupdate</p>
                     </div>
