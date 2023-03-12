@@ -30,6 +30,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/data-jemaat-ajax', 'ajax')->name('datajemaat.ajax');
     });
 
+    Route::controller(JemaatSimpatisanController::class)->group(function () {
+        Route::get('/data-jemaat-simpatisan', 'index')->name('jemaat.simpatisan');
+        Route::get('/data-jemaat-simpatisan-ajax', 'ajax')->name('jemaat.simpatisan.ajax');
+        Route::get('/tambah-jemaat-simpatisan', 'create')->name('jemaat.simpatisan.create');
+        Route::post('/tambah-jemaat-simpatisan', 'store')->name('jemaat.simpatisan.store');
+
+    });
+
 
     Route::controller(KepalaKeluargaController::class)->group(function () {
         Route::get('/data-kepala-keluarga', 'index')->name('data-kk');

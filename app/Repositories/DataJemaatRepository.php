@@ -36,6 +36,7 @@ class DataJemaatRepository
                 'jemaat_status_aktif' => "t",
                 'jemaat_kk_status' => $request->jemaat_kk_status ?? false,
                 'jemaat_golongan_darah' => $request->jemaat_golongan_darah,
+                'is_simpatisan' => $request->jemaat_simpatisan ?? false,
             ]);
 
             $jemaat->id_parent = $request->id_parent;
