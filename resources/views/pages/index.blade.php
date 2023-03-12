@@ -24,6 +24,22 @@
                 <div class="hpanel widget-int-shape responsive card-radius card-shadow">
                     <div class="panel-body" style="min-height:109px;">
                         <div class="pull-left">
+                            <h2 style="color:#0f7173">{{$data['total_jemaat_simpatisan']}}</h2>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="fa fa-users fa-2x"></i>
+                        </div>
+                        <div class="m-t-xl widget-cl-3">
+                            <br>
+                            <h4 class="stats-title">Total Jemaat Simpatisan</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mg-b-15">
+                <div class="hpanel widget-int-shape responsive card-radius card-shadow">
+                    <div class="panel-body" style="min-height:109px;">
+                        <div class="pull-left">
                             <h2 style="color:#26A69A">{{$data['total_kk']}}</h2>
                         </div>
                         <div class="stats-icon pull-right">
@@ -164,12 +180,16 @@
                 }
             },
             series: [{
+                name: 'Total',
+                data: {{json_encode($total)}},
+                color: '#1A337B'
+            }, {
                 name: 'Laki-Laki',
                 data: {{json_encode($laki)}},
                 color: '#EF5350'
             }, {
                 name: 'Perempuan',
-                data: {!!json_encode($perempuan)!!},
+                data: {{json_encode($perempuan)}},
                 color: '#80CBC4'
             }]
         });
