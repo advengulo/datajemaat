@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class DropDataJemaatsTable extends Migration
+class AddColumnSimpatisanToDataJemaats extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class DropDataJemaatsTable extends Migration
     public function up()
     {
         Schema::table('data_jemaats', function (Blueprint $table) {
-            $table->dropColumn('jemaat_keterangan_status');
-            $table->dropColumn('jemaat_tanggal_status');
+            $table->boolean('is_simpatisan')->after('jemaat_kk_status')->default(false);
         });
     }
 
@@ -27,8 +26,7 @@ class DropDataJemaatsTable extends Migration
     public function down()
     {
         Schema::table('data_jemaats', function (Blueprint $table) {
-            $table->string('jemaat_keterangan_status')->nullable();
-            $table->date('jemaat_tanggal_status')->nullable();
+            $table->dropColumn('is_simpatisan');
         });
     }
 }

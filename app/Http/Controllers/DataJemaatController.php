@@ -34,7 +34,7 @@ class DataJemaatController extends Controller
     public function ajax(Request $request)
     {
         $datajemaats = data_jemaat::with('lingkungan')
-            ->where('jemaat_status_aktif', 't')
+            ->where('jemaat_status_aktif', 't')->isSimpatisan(false)
             ->select('id', 'jemaat_nama', 'jemaat_nama_alias', 'jemaat_nomor_stambuk', 'id_lingkungan', 'jemaat_status_aktif');
 
         if ($request->ajax()) {
