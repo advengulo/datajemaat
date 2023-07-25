@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\data_jemaat;
 use DataTables;
+use App\Models\Config;
+use App\Models\data_jemaat;
+use Illuminate\Http\Request;
 
 class DataWarningController extends Controller
 {
+    private $warningTahunlahir;
+
+    public function __construct() {
+        $this->warningTahunlahir = Config::where("name", "warning_tahun_lahir")->first();
+    }
+    
     public function tanggalLahir(Request $request)
     {
-        //find data jemaat ketika tanggal lahir kurang dari tahun 1940 dan lebih dari tanggal hari ini
-        $datajemaats = data_jemaat::getWarningTanggalLahir()->get();
+        //find data jemaat ketika tanggal lahir kurang dari warningTahunlahir dan lebih dari tanggal hari ini
+        $datajemaats = data_jemaat::getWarningTanggalLahir($this->warningTahunlahir->value)->get();
 
         //return data to Datatable serverside
         if($request->ajax()){  

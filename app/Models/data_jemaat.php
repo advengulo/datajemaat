@@ -125,9 +125,9 @@ class data_jemaat extends Model
         return $this->belongsTo('\App\Models\RiwayatInaktif', 'jemaat_nomor_stambuk', 'no_stambuk');
     }
 
-    public function scopeGetWarningTanggalLahir($query)
+    public function scopeGetWarningTanggalLahir($query, $tahun)
     {
-        return $query->where('jemaat_tanggal_lahir', '<', '1940-01-01')
+        return $query->where('jemaat_tanggal_lahir', '<', $tahun.'-01-01')
             ->orWhere('jemaat_tanggal_lahir', '>', Carbon::now())
             ->where('jemaat_status_aktif', 't');
     }
