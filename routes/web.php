@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::controller(LaporanController::class)->group(function () {
         Route::get('/laporan/tahunan', 'tahunan')->name('laporan.tahunan');
         Route::get('/laporan/statistik', 'statistik')->name('laporan.statistik');
-        Route::get('/laporan/sidi', 'Laporan\SidiController')->name('laporan.sidi');
+        Route::get('/laporan/sidi', 'Laporan\SidiController@sidi')->name('laporan.sidi');
         Route::get('/laporan/data-sidi', 'Laporan\SidiController@nama')->name('laporan.namasidi');
     });
 

@@ -11,7 +11,7 @@
                         <div class="main-sparkline13-hd">
                             <h1>Warning Tanggal Lahir</h1>
                         </div>
-                        <p>Menampilkan data jemaat yang memiliki <b>Tahun lahir dibawah 1940</b> dan melebihi Tahun saat ini</p>
+                        <p>Menampilkan data jemaat yang memiliki <b>Tahun lahir dibawah 1935</b> dan melebihi Tahun saat ini</p>
                     </div>
                     <div class="row mg-b-15">
                         <div class="col-md-4">
