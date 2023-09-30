@@ -104,33 +104,37 @@
                                                         @endif
                                                     </div>
                                                     @if($data_jemaat->jemaat_status_aktif == "t")
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-2 col-md-offset-2">
-                                                                    <a href="#" data-toggle="modal" data-target="#jadikankkmodal"> <button type="button" {{ $data_jemaat->jemaat_kk_status == true ? 'disabled' : '' }} class="btn btn-info btn-block">Jadikan KK</button></a>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <a href={{ route('jemaateditprofile', $data_jemaat) }}> <button type="button" class="btn btn-warning btn-block">Edit</button></a>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <div class="dropdown">
-                                                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ubah Status Jemaat
-                                                                            <span class="caret"></span></button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="#" data-toggle="modal" data-target="#PrimaryModalalert">Pindah</a></li>
-                                                                            <li><a href="#" data-toggle="modal" data-target="#DangerModalalert">Meninggal</a></li>
-                                                                            <li><a href="#" data-toggle="modal" data-target="#ModalJemaatSimpatisan">Simpatisan</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <a href="#" data-toggle="modal" data-target="#DangerModalalert1">
-                                                                        <button type="button" class="btn btn-danger btn-block">Hapus </button>
-                                                                    </a>
-                                                                </div>
+                                                    <div class="col-md-12 d-flex justify-content-between">
+
+                                                        <div class="col-md-3">
+                                                            <a href="#" data-toggle="modal" data-target="#jadikankkmodal"> <button type="button" {{ $data_jemaat->jemaat_kk_status == true ? 'disabled' : '' }} class="btn btn-info btn-block">Jadikan KK</button></a>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <a href={{ route('jemaateditprofile', $data_jemaat) }}> <button type="button" class="btn btn-warning btn-block">Edit</button></a>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">Ubah Status Jemaat
+                                                                    <span class="caret"></span></button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a href="#" data-toggle="modal" data-target="#PrimaryModalalert">Pindah</a></li>
+                                                                    <li><a href="#" data-toggle="modal" data-target="#DangerModalalert">Meninggal</a></li>
+                                                                    <li><a href="#" data-toggle="modal" data-target="#ModalJemaatSimpatisan">Simpatisan</a></li>
+                                                                </ul>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-3">
+                                                            <a href="#" data-toggle="modal" data-target="#DangerModalalert1">
+                                                                <button type="button" class="btn btn-danger btn-block">Hapus </button>
+                                                            </a>
+                                                        </div>
+
+
+                                                        {{-- <div class="col-md-12">
+                                                            <div class="row">
+                                                                
+                                                            </div>
+                                                        </div> --}}
 
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
                                                             <div id="DangerModalalert1" class="modal modal-edu-general FullColor-popup-DangerModal fade" role="dialog">
