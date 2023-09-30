@@ -22,12 +22,12 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="product-payment-inner-st">
                     <ul id="myTabedu1" class="tab-review-design">
-                        <li class="active"><a data-toggle="tab" href="#description">Data Pribadi</a></li>
+                        <li class="active"><a data-toggle="tab" href="#data_pribadi">Data Pribadi</a></li>
                         <li><a data-toggle="tab" href="#keluarga"> Data Keluarga</a></li>
-                        <li><a data-toggle="tab" href="#komisi">Data Komisi</a></li>
+                        {{-- <li><a data-toggle="tab" href="#komisi">Data Komisi</a></li> --}}
                     </ul>
                     <div id="myTabContent" class="tab-content custom-product-edit">
-                        <div class="product-tab-list tab-pane fade active in" id="description">
+                        <div class="product-tab-list tab-pane fade active in" id="data_pribadi">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
@@ -119,7 +119,8 @@
                                                                             <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
                                                                             <li><a href="#" data-toggle="modal" data-target="#PrimaryModalalert">Pindah</a></li>
-                                                                            <li><a href="#" data-toggle="modal" data-target="#DangerModalalert">Meninggal</a></li>                                                                            
+                                                                            <li><a href="#" data-toggle="modal" data-target="#DangerModalalert">Meninggal</a></li>
+                                                                            <li><a href="#" data-toggle="modal" data-target="#ModalJemaatSimpatisan">Simpatisan</a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
@@ -256,6 +257,27 @@
                                                                             {{-- <a href="#">Simpan</a> --}}
                                                                             <button type="submit" class="btn btn-danger">Simpan</button>
                                                                         </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="ModalJemaatSimpatisan" class="modal modal-edu-general Customwidth-popup-WarningModal fade" role="dialog"> 
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <form action="{{ route('updateStatusSimpatisan', $data_jemaat)}}" method="POST"  class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                                                            {{ csrf_field() }}
+                                                                            {{ method_field('PATCH') }}
+                                                                            <div class="modal-close-area modal-close-df">
+                                                                                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                                                                            </div>
+                                                                            <div class="modal-body">                                                                       
+                                                                                <h4>Ubah <span style="text-transform: uppercase">{{$data_jemaat->jemaat_nama}}</span> menjadi Simpatisan</h4>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                                                <button type="submit" class="btn btn-success">Ubah</button>
+                                                                            </div>
                                                                         </form>
                                                                     </div>
                                                                 </div>

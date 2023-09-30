@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('/data-jemaat/profile/{id}/update2', 'updateStatusMeninggal')->name('updatestatusmeninggal');
         Route::patch('/data-jemaat/profile/{id}/update3', 'destroy')->name('hapusdatajemaat');
         Route::patch('/data-jemaat/profile/{id}/update4', 'jadikankk')->name('jadikankk');
+        Route::patch('/data-jemaat/profile/{id}/update5', 'updateStatusSimpatisan')->name('updateStatusSimpatisan');
         Route::get('/tambah-jemaat', 'create')->name('tambahjemaat');
         Route::post('/tambah-jemaat', 'store')->name('tambahdatajemaat');
         Route::get('/data-jemaat/export', 'exportDataJemaat')->name('export.datajemaat');

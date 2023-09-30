@@ -320,4 +320,29 @@ class DataJemaatController extends Controller
         return view('pages.jemaat.non_lingkungan');
 
     }
+
+    public function updateStatusSimpatisan($id)
+    {
+        DB::beginTransaction();
+        try {
+            $data_jemaat = data_jemaat::find($id);
+            if($data_jemaat->jemaat_kk_status == true){
+                $dataKeluargas = data_jemaat::where('id_parent', $id)->get();
+                foreach($dataKeluargas as $dataKeluarga){
+                    $dataKeluarga->update([
+                        'is_simpatisan' => true,
+                    ]);
+                } 
+            }
+            else{
+                $data_jemaat->is_simpatisan = true;
+                $data_jemaat->save();
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with(['error' => 'Error ada kesalahan perubahan data']);
+        }
+        return back()->with(['update' => 'Data Jemaat berhasil di ubah']);
+    }
 }
