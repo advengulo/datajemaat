@@ -51,6 +51,13 @@
                                             <div class="profile-label">Nama Alias</div>
                                             <div class="profile-value">{{$data_jemaat->jemaat_nama_alias}}</div>
                                         </div>
+                                        @if($data_jemaat->is_simpatisan)
+                                        <div class="profile-data mb-3">
+                                            <div class="profile-label">Status Jemaat</div>
+                                            <div class="profile-value text-success"> Simpatisan
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
 

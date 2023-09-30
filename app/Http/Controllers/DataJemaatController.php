@@ -323,18 +323,22 @@ class DataJemaatController extends Controller
 
     public function updateStatusSimpatisan($id)
     {
+        $data_jemaat = data_jemaat::find($id);
+
+        if ($data_jemaat->is_simpatisan) {
+            return back()->with(['warning' => 'Data jemaat merupakan jemaat simpatisan']);
+        }
+
         DB::beginTransaction();
         try {
-            $data_jemaat = data_jemaat::find($id);
-            if($data_jemaat->jemaat_kk_status == true){
+            if ($data_jemaat->jemaat_kk_status == true) {
                 $dataKeluargas = data_jemaat::where('id_parent', $id)->get();
-                foreach($dataKeluargas as $dataKeluarga){
+                foreach ($dataKeluargas as $dataKeluarga) {
                     $dataKeluarga->update([
                         'is_simpatisan' => true,
                     ]);
-                } 
-            }
-            else{
+                }
+            } else {
                 $data_jemaat->is_simpatisan = true;
                 $data_jemaat->save();
             }
