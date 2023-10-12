@@ -34,15 +34,12 @@ class DataJemaatController extends Controller
     public function ajax(Request $request)
     {
         $datajemaats = data_jemaat::with('lingkungan')
-            ->where('jemaat_status_aktif', 't')->isSimpatisan(false)
-            ->select('id', 'jemaat_nama', 'jemaat_nama_alias', 'jemaat_nomor_stambuk', 'id_lingkungan', 'jemaat_status_aktif');
-
+            ->isActive()->isSimpatisan(false)
+            ->select('data_jemaats.*');
+        
         if ($request->ajax()) {
             return DataTables::of($datajemaats)
-                ->editColumn('lingkungan', function ($datajemaats) {
-                    return $datajemaats->id_lingkungan . ' - ' . $datajemaats->lingkungan->nama_lingkungan;
-                })
-                ->addColumn('jemaat_status_aktif', function ($datajemaats) {
+                ->addColumn('jemaat_status_aktif', function () {
                     return '<span class="label label-primary">Aktif</span>';
                 })
                 ->addColumn('action', function ($data) {

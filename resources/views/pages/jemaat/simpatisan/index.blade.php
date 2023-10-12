@@ -46,7 +46,8 @@
                                         <th>Nama</th>
                                         <th>Nama Alias</th>
                                         <th>Nomor Stambuk</th>
-                                        <th>Lingkungan </th>
+                                        <th>Nomor Lingkungan </th>
+                                        <th>Nama Lingkungan </th>
                                         <th>Status Jemaat</th>
                                         <th></th>
                                     </tr>
@@ -90,8 +91,12 @@
                     name: 'jemaat_nomor_stambuk'
                 },
                 {
-                    data: 'lingkungan',
+                    data: 'id_lingkungan',
                     name: 'id_lingkungan'
+                },
+                {
+                    data: 'lingkungan.nama_lingkungan',
+                    name: 'lingkungan.nama_lingkungan'
                 },
                 {
                     data: 'jemaat_status_aktif',

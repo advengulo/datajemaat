@@ -29,15 +29,12 @@ class JemaatSimpatisanController extends Controller
     {
         $datajemaats = data_jemaat::with('lingkungan')
             ->isActive()->isSimpatisan()
-            ->select('id', 'jemaat_nama', 'jemaat_nama_alias', 'jemaat_nomor_stambuk', 'id_lingkungan', 'jemaat_status_aktif');
+            ->select('data_jemaats.*');
 
         if ($request->ajax()) {
             return DataTables::of($datajemaats)
-                ->editColumn('lingkungan', function ($datajemaats) {
-                    return $datajemaats->id_lingkungan . ' - ' . $datajemaats->lingkungan->nama_lingkungan;
-                })
-                ->addColumn('jemaat_status_aktif', function ($datajemaats) {
-                    return '<span class="label label-primary">Aktif</span>';
+                ->addColumn('jemaat_status_aktif', function () {
+                    return '<span class="label label-primary">Aktif</span> - <span class="label label-success">Simpatisan</span>';
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . Route('profiledetail', $data->id) . '" target="_blank" class="btn btn-icon btn-sm btn-primary" id="btnDetail" data-toggle="tooltip" data-placement="top" title="Lihat"><i class="fa fa-eye" style="width: 20px;"></i>Lihat</a>';
