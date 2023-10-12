@@ -13,10 +13,26 @@
                         </div>
                     </div>
                     <div class="row mg-b-15">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <a class="btn btn-info btn-sm" href="{{ route('tambahjemaat') }}"><i class="fas fa-plus"></i> Tambah Data</a>
                             <a class="btn btn-success btn-sm" href="{{ route('export.datajemaat') }}"><i class="fas fa-download"></i> Export Data</a>
+                            <button class="btn btn-default btn-sm" id="filterButton">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                            <div id="filterModal" class="filter-modal">
+                                <div class="filter-content">
+                                    <div class="form-group">
+                                        <label for="filterInput">Nomor Lingkungan</label>
+                                        <input type="number" class="form-control" id="filterInput" placeholder="">
+                                    </div>
+                                    <div class="filter-buttons">
+                                        <button class="btn btn-primary">Terapkan</button>
+                                        <button class="btn btn-secondary" id="closeFilter">Tutup</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
                     <div class="sparkline13-graph">
                         <div class="table-responsive">
@@ -72,6 +88,7 @@
             serverSide: true, //aktifkan server-side 
             ajax: {
                 url: "{{ route('datajemaat.ajax') }}",
+                url: "{{ route('datajemaat.ajax') }}",
                 type: 'GET',
             },
             columns: [{
@@ -106,6 +123,22 @@
                 [1, 'asc']
             ],
         });
+    });
+
+    const filterModal = document.getElementById('filterModal');
+    const filterButton = document.getElementById('filterButton');
+    const closeFilterButton = document.getElementById('closeFilter');
+
+    filterButton.addEventListener('click', function () {
+        if (filterModal.style.display === 'block') {
+            filterModal.style.display = 'none';
+        } else {
+            filterModal.style.display = 'block';
+        }
+    });
+
+    closeFilterButton.addEventListener('click', function () {
+        filterModal.style.display = 'none';
     });
 </script>
 @endsection

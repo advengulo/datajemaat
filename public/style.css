@@ -6229,3 +6229,30 @@ div#sparklinehome canvas {
         border: none;
     }
 }
+
+.filter-modal {
+    display: none;
+    position:absolute;
+    width: 30%;
+    margin-top: 3px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001; /* Set a higher z-index value */
+}
+
+.filter-content {
+    padding: 20px;
+}
+
+.filter-buttons {
+    text-align: right;
+    margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+  .filter-modal {
+    width: 80%;
+  }
+}
