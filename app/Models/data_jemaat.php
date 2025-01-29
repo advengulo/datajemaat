@@ -53,12 +53,12 @@ class data_jemaat extends Model
         }
     }
 
-    public function getAge(){ 
+    public function getAge(){
         $data = Helper::isJemaatPassedAway($this->jemaat_nomor_stambuk);
 
         if($data){
             $diff  = date_diff($this->jemaat_tanggal_lahir, $data->jemaat_tanggal_status );
-           
+
             return $diff->format('%y Tahun, %m Bulan, %d Hari / Meninggal');
         }
 
@@ -71,7 +71,7 @@ class data_jemaat extends Model
         return $q->where('id_parent', $id);
     }
 
-    public function countAge(){        
+    public function countAge(){
         return $this->jemaat_tanggal_lahir->diff(Carbon::now())->y;
     }
 
@@ -92,6 +92,10 @@ class data_jemaat extends Model
     public function scopeLingkunganNull($q)
     {
         return $q->where('id_lingkungan', null);
+    }
+    public function scopeIsKepalaKeluarga($q, $override = true)
+    {
+        return $q->where('jemaat_kk_status', '=', $override);
     }
 
     public function pendidikan()
