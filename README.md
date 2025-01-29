@@ -12,7 +12,6 @@ Build with laravel 5.8 and has upgraded to laravel 8
 - Statistik
 
 **This project implements**
-* how to upgraded Laravel version lol
 * using service repository pattern
 
 **What Next?**
