@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::controller(KepalaKeluargaController::class)->group(function () {
         Route::get('/data-kepala-keluarga', 'index')->name('data-kk');
         Route::get('/data-kepala-keluarga/export', 'exportDataKK')->name('export.dataKK');
+        Route::get('/data-kepala-keluarga-simpatisan', 'kepalaKeluargaSimpatisan')->name('data-kk-simpatisan');
+        Route::get('/data-kepala-keluarga-simpatisan/export', 'exportDataKKSimpatisan')->name('export.dataKKSimpatisan');
     });
 
     Route::get('/import-data', 'ImportExportController@importIndex')->name('import.index');

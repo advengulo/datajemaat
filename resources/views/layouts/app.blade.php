@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@isset($title)
-            {{ $title }} | 
+            {{ $title }} |
         @endisset Data Jemaat BNKP</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- inline css/script
 		============================================ -->
     @yield('scriptshead')
@@ -128,9 +128,9 @@
     <!-- Awsomeicon
         ============================================ -->
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-    
-    
-    
+
+
+
 </head>
 
 <body>
@@ -152,11 +152,16 @@
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-user-friends fa-fw" style='font-size:17px'></span> <span class="mini-click-non">Jemaat</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("data-jemaat")?'active':''}} || {{Request::is("data-jemaat/profile/*")?'active':''}}"><a title="Data Jemaat" href={{asset('/data-jemaat')}}><span class="mini-sub-pro">Data Jemaat</span></a></li>                            
+                                <li class="{{Request::is("data-jemaat")?'active':''}} || {{Request::is("data-jemaat/profile/*")?'active':''}}"><a title="Data Jemaat" href={{asset('/data-jemaat')}}><span class="mini-sub-pro">Data Jemaat</span></a></li>
                                 <li class="{{Request::is("tambah-jemaat")?'active':''}}"><a title="Tambah Jemaat" href={{asset('/tambah-jemaat')}}><span class="mini-sub-pro">Tambah Jemaat</span></a></li>
-                                <li class="{{Request::is("data-kepala-keluarga")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>                            
-                                <li class="{{Request::is("data-jemaat-simpatisan")?'active':''}} || {{Request::is("tambah-jemaat-simpatisan")?'active':''}}""><a title="Data Jemaat Simpatisan" href={{asset('/data-jemaat-simpatisan')}}><span class="mini-sub-pro">Simpatisan</span></a></li>                            
-                                {{-- <li class="{{Request::is("data-jemaat/non-lingkungan")?'active':''}}"><a title="Data Kepala Keluarga" href={{url('/data-jemaat/non-lingkungan')}}><span class="mini-sub-pro">Non Lingkungan {!! $notif['nonLingkungan'] !!} </span></a></li>                             --}}
+                                <li class="{{Request::is("data-kepala-keluarga")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-user-friends fa-fw" style='font-size:17px'></span> <span class="mini-click-non">Simpatisan</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li class="{{Request::is("data-jemaat-simpatisan")?'active':''}} || {{Request::is("tambah-jemaat-simpatisan")?'active':''}}""><a title="Data Jemaat Simpatisan" href={{asset('/data-jemaat-simpatisan')}}><span class="mini-sub-pro">Data Simpatisan</span></a></li>
+                                <li class="{{Request::is("data-kepala-keluarga-simpatisan")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga-simpatisan')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>
                             </ul>
                         </li>
                         <li class="{{Request::is("kartu-jemaat")?'active':''}}" >
@@ -168,58 +173,58 @@
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-table fa-fw"></span> <span class="mini-click-non">Jemaat Inaktif</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("data-jemaat-meninggal") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-meninggal')}}"><span class="mini-sub-pro">Meninggal</span></a></li>                            
-                                <li class="{{Request::is("data-jemaat-pindah") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-pindah')}}"><span class="mini-sub-pro">Pindah</span></a></li>                            
+                                <li class="{{Request::is("data-jemaat-meninggal") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-meninggal')}}"><span class="mini-sub-pro">Meninggal</span></a></li>
+                                <li class="{{Request::is("data-jemaat-pindah") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-pindah')}}"><span class="mini-sub-pro">Pindah</span></a></li>
                             </ul>
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-database fa-fw"></span> <span class="mini-click-non">Data Master</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("data-lingkungan") ? 'active' : ''}}"><a href="{{asset('/data-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>                            
-                                <li class="{{Request::is("#") ? 'active' : ''}}"><a href="{{asset('#')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>                            
-                                <li class="{{Request::is("#") ? 'active' : ''}}"><a href="{{asset('#')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>                            
+                                <li class="{{Request::is("data-lingkungan") ? 'active' : ''}}"><a href="{{asset('/data-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
+                                <li class="{{Request::is("#") ? 'active' : ''}}"><a href="{{asset('#')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>
+                                <li class="{{Request::is("#") ? 'active' : ''}}"><a href="{{asset('#')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>
                             </ul>
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-exclamation-triangle fa-fw"></span> <span class="mini-click-non">Data Warning<span> {!! $notif['dataWarning'] !!}</i> </span></span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("data-warning/tanggal-lahir") ? 'active' : ''}}"><a href="{{asset('/data-warning/tanggal-lahir')}}"><span class="mini-sub-pro">Tanggal Lahir</span></a></li>                            
+                                <li class="{{Request::is("data-warning/tanggal-lahir") ? 'active' : ''}}"><a href="{{asset('/data-warning/tanggal-lahir')}}"><span class="mini-sub-pro">Tanggal Lahir</span></a></li>
                                 {{-- <li class="{{Request::is("data-warning/data-tunggal") ? 'active' : ''}}"><a href="{{asset('/data-warning/data-tunggal')}}"><span class="mini-sub-pro">Data Tunggal</span></a></li>                             --}}
-                                <li class="{{Request::is("data-warning/data-ganda") ? 'active' : ''}}"><a href="{{asset('/data-warning/data-ganda')}}"><span class="mini-sub-pro">Data Ganda</span></a></li>                            
+                                <li class="{{Request::is("data-warning/data-ganda") ? 'active' : ''}}"><a href="{{asset('/data-warning/data-ganda')}}"><span class="mini-sub-pro">Data Ganda</span></a></li>
                             </ul>
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-scroll fa-fw"></span> <span class="mini-click-non">Laporan</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 {{-- <li class="{{Request::is("laporan/tahunan") ? 'active' : ''}}"><a href="{{asset('/laporan/tahunan')}}"><span class="mini-sub-pro">Tahunan</span></a></li>                             --}}
-                                <li class="{{Request::is("laporan/statistik") ? 'active' : ''}}"><a href="{{asset('/laporan/statistik')}}"><span class="mini-sub-pro">Statistik</span></a></li>                            
-                                <li class="{{Request::is("laporan/sidi") ? 'active' : ''}}"><a href="{{asset('/laporan/sidi')}}"><span class="mini-sub-pro">Sidi</span></a></li>                            
-                                <li class="{{Request::is("laporan/data-sidi") ? 'active' : ''}}"><a href="{{asset('/laporan/data-sidi')}}"><span class="mini-sub-pro">Data Sidi</span></a></li>                            
+                                <li class="{{Request::is("laporan/statistik") ? 'active' : ''}}"><a href="{{asset('/laporan/statistik')}}"><span class="mini-sub-pro">Statistik</span></a></li>
+                                <li class="{{Request::is("laporan/sidi") ? 'active' : ''}}"><a href="{{asset('/laporan/sidi')}}"><span class="mini-sub-pro">Sidi</span></a></li>
+                                <li class="{{Request::is("laporan/data-sidi") ? 'active' : ''}}"><a href="{{asset('/laporan/data-sidi')}}"><span class="mini-sub-pro">Data Sidi</span></a></li>
                             </ul>
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-table fa-fw"></span> <span class="mini-click-non">Rekap Data</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("rekap-lingkungan") ? 'active' : ''}}"><a href="{{asset('/rekap-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>                            
-                                <li class="{{Request::is("rekap-kepalakeluarga") ? 'active' : ''}}"><a href="{{asset('/rekap-kepalakeluarga')}}"><span class="mini-sub-pro">Kepala Keluarga</span></a></li>                            
-                                <li class="{{Request::is("rekap-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>                            
-                                <li class="{{Request::is("rekap-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>                            
-                                <li class="{{Request::is("rekap-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/rekap-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>                            
-                                <li class="{{Request::is("rekap-pendidikan") ? 'active' : ''}}"><a href="{{asset('/rekap-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>                            
-                                <li class="{{Request::is("rekap-pekerjaan") ? 'active' : ''}} || {{Request::is("rekap-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/rekap-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>                            
-                                <li class="{{Request::is("rekap-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/rekap-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>                       
+                                <li class="{{Request::is("rekap-lingkungan") ? 'active' : ''}}"><a href="{{asset('/rekap-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
+                                <li class="{{Request::is("rekap-kepalakeluarga") ? 'active' : ''}}"><a href="{{asset('/rekap-kepalakeluarga')}}"><span class="mini-sub-pro">Kepala Keluarga</span></a></li>
+                                <li class="{{Request::is("rekap-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>
+                                <li class="{{Request::is("rekap-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>
+                                <li class="{{Request::is("rekap-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/rekap-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>
+                                <li class="{{Request::is("rekap-pendidikan") ? 'active' : ''}}"><a href="{{asset('/rekap-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>
+                                <li class="{{Request::is("rekap-pekerjaan") ? 'active' : ''}} || {{Request::is("rekap-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/rekap-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>
+                                <li class="{{Request::is("rekap-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/rekap-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>
                             </ul>
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-chart-bar fa-fw"></span> <span class="mini-click-non">Grafik</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("grafik-lingkungan") ? 'active' : ''}}"><a href="{{asset('/grafik-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>                            
-                                <li class="{{Request::is("grafik-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>                            
-                                <li class="{{Request::is("grafik-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>                            
-                                <li class="{{Request::is("grafik-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/grafik-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>                            
-                                <li class="{{Request::is("grafik-pendidikan") ? 'active' : ''}}"><a href="{{asset('/grafik-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>                            
-                                <li class="{{Request::is("grafik-pekerjaan") ? 'active' : ''}} || {{Request::is("grafik-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/grafik-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>                            
-                                <li class="{{Request::is("grafik-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/grafik-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>  
+                                <li class="{{Request::is("grafik-lingkungan") ? 'active' : ''}}"><a href="{{asset('/grafik-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
+                                <li class="{{Request::is("grafik-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>
+                                <li class="{{Request::is("grafik-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>
+                                <li class="{{Request::is("grafik-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/grafik-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>
+                                <li class="{{Request::is("grafik-pendidikan") ? 'active' : ''}}"><a href="{{asset('/grafik-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>
+                                <li class="{{Request::is("grafik-pekerjaan") ? 'active' : ''}} || {{Request::is("grafik-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/grafik-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>
+                                <li class="{{Request::is("grafik-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/grafik-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -294,7 +299,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="mobile-menu">
                                 <nav id="dropdown">
-                                    <ul class="mobile-menu-nav">                                        
+                                    <ul class="mobile-menu-nav">
                                         <li><a href="{{asset('/')}}">Dashboard</a></li>
                                         <li>
                                             <a data-toggle="collapse" href="#" aria-expanded="false"><span class="fas fa-user-friends"> </span><span class="mini-click-non">Data Jemaat</span></a>
@@ -314,39 +319,39 @@
                                         <li>
                                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-table"></span> <span class="mini-click-non">Jemaat Inaktif</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li class="{{Request::is("data-jemaat-meninggal") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-meninggal')}}"><span class="mini-sub-pro">Meninggal</span></a></li>                            
-                                                <li class="{{Request::is("data-jemaat-pindah") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-pindah')}}"><span class="mini-sub-pro">Pindah</span></a></li>                            
+                                                <li class="{{Request::is("data-jemaat-meninggal") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-meninggal')}}"><span class="mini-sub-pro">Meninggal</span></a></li>
+                                                <li class="{{Request::is("data-jemaat-pindah") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-pindah')}}"><span class="mini-sub-pro">Pindah</span></a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-table"></span> <span class="mini-click-non">Rekap Data</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li class="{{Request::is("rekap-lingkungan") ? 'active' : ''}}"><a href="{{asset('/rekap-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>                            
-                                                <li class="{{Request::is("rekap-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>                            
-                                                <li class="{{Request::is("rekap-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>                            
-                                                <li class="{{Request::is("rekap-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/rekap-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>                            
-                                                <li class="{{Request::is("rekap-pendidikan") ? 'active' : ''}}"><a href="{{asset('/rekap-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>                            
-                                                <li class="{{Request::is("rekap-pekerjaan") ? 'active' : ''}} || {{Request::is("rekap-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/rekap-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>                            
-                                                <li class="{{Request::is("rekap-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/rekap-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>                       
+                                                <li class="{{Request::is("rekap-lingkungan") ? 'active' : ''}}"><a href="{{asset('/rekap-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
+                                                <li class="{{Request::is("rekap-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>
+                                                <li class="{{Request::is("rekap-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/rekap-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>
+                                                <li class="{{Request::is("rekap-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/rekap-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>
+                                                <li class="{{Request::is("rekap-pendidikan") ? 'active' : ''}}"><a href="{{asset('/rekap-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>
+                                                <li class="{{Request::is("rekap-pekerjaan") ? 'active' : ''}} || {{Request::is("rekap-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/rekap-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>
+                                                <li class="{{Request::is("rekap-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/rekap-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-chart-bar"></span> <span class="mini-click-non">Grafik</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li class="{{Request::is("grafik-lingkungan") ? 'active' : ''}}"><a href="{{asset('/grafik-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>                            
-                                                <li class="{{Request::is("grafik-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>                            
-                                                <li class="{{Request::is("grafik-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>                            
-                                                <li class="{{Request::is("grafik-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/grafik-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>                            
-                                                <li class="{{Request::is("grafik-pendidikan") ? 'active' : ''}}"><a href="{{asset('/grafik-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>                            
-                                                <li class="{{Request::is("grafik-pekerjaan") ? 'active' : ''}} || {{Request::is("grafik-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/grafik-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>                            
-                                                <li class="{{Request::is("grafik-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/grafik-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>  
+                                                <li class="{{Request::is("grafik-lingkungan") ? 'active' : ''}}"><a href="{{asset('/grafik-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
+                                                <li class="{{Request::is("grafik-jenis-kelamin") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-kelamin')}}"><span class="mini-sub-pro">Jenis Kelamin</span></a></li>
+                                                <li class="{{Request::is("grafik-jenis-usia") ? 'active' : ''}}"><a href="{{asset('/grafik-jenis-usia')}}"><span class="mini-sub-pro">Jenis Usia</span></a></li>
+                                                <li class="{{Request::is("grafik-status-perkawinan") ? 'active' : ''}}"><a href="{{asset('/grafik-status-perkawinan')}}"><span class="mini-sub-pro">Status Perkawinan</span></a></li>
+                                                <li class="{{Request::is("grafik-pendidikan") ? 'active' : ''}}"><a href="{{asset('/grafik-pendidikan')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>
+                                                <li class="{{Request::is("grafik-pekerjaan") ? 'active' : ''}} || {{Request::is("grafik-pekerjaan/*") ? 'active' : ''}}"><a href="{{asset('/grafik-pekerjaan')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>
+                                                <li class="{{Request::is("grafik-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/grafik-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
-                                                <span class="edu-icon edu-locked author-log-ic"></span>Log Out                                                         
+                                                <span class="edu-icon edu-locked author-log-ic"></span>Log Out
                                             </a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                 @csrf
@@ -386,9 +391,9 @@
                         </div>
                     </div>
                 </div> --}}
-            </div>       
+            </div>
         </div>
-        <!-- Content 
+        <!-- Content
             ========================================-->
         @yield('content')
     </div>
@@ -456,7 +461,7 @@
     <script src={{ asset('js/datapicker/datepicker-active.js') }}></script>
     <!-- Select2
         =========================================== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <!-- plugins JS
 		============================================ -->
     <script src={{ asset('js/plugins.js') }}></script>
@@ -487,7 +492,7 @@
     <!-- Date Time Picker JS
         ============================================ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-    
+
     <!-- extend scrip on blade
         ============================================ -->
     @yield('scripts')
