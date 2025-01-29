@@ -12,3 +12,4 @@ yarn-error.log
 error_log
 /public/.well-known
 /public/error_log
+/.idea/
