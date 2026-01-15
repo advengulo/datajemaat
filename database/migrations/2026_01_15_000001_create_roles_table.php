@@ -14,11 +14,15 @@ class CreateRolesTable extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->bigIncrements('id');
+            $table->string('name', 100);
+            $table->string('slug', 100)->unique();
             $table->text('description')->nullable();
+            $table->enum('scope', ['global', 'lingkungan'])->default('global');
             $table->timestamps();
+
+            $table->index('slug');
+            $table->index('scope');
         });
     }
 
