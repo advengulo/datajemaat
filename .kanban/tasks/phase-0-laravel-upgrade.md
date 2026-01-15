@@ -10,29 +10,38 @@
 
 ## Step A: Laravel 8 → 9
 
+### Pre-Upgrade Preparation
+- [ ] Set up staging environment
+- [ ] Full database backup
+- [ ] Document current PHP version
+- [x] Create branch: `upgrade/laravel-9`
+
+---
+
 ### Update Dependencies
-- [ ] Update `composer.json` with Laravel 9 requirements
-- [ ] Update PHP version to `^8.0`
-- [ ] Update `laravel/framework` to `^9.0`
-- [ ] Update `laravel/ui` to `^4.0`
-- [ ] Update `barryvdh/laravel-dompdf` to `^2.0`
-- [ ] Update `yajra/laravel-datatables-oracle` to `^10.0`
-- [ ] Update `nunomaduro/collision` to `^6.0`
-- [ ] Update `phpunit/phpunit` to `^9.5`
-- [ ] Add `spatie/laravel-ignition` `^1.0`
-- [ ] Add `fakerphp/faker`
+- [x] Update `composer.json` with Laravel 9 requirements
+- [x] Update PHP version to `^8.0`
+- [x] Update `laravel/framework` to `^9.0`
+- [x] Update `laravel/ui` to `^4.0`
+- [x] Update `barryvdh/laravel-dompdf` to `^2.0`
+- [x] Update `yajra/laravel-datatables-oracle` to `^10.0`
+- [x] Update `nunomaduro/collision` to `^6.0`
+- [x] Update `phpunit/phpunit` to `^9.5`
+- [x] Add `spatie/laravel-ignition` `^1.0`
+- [x] Add `fakerphp/faker`
 
 ### Remove Deprecated Packages
-- [ ] Remove `fideloper/proxy`
-- [ ] Remove `laravel/legacy-factories`
-- [ ] Remove `facade/ignition`
-- [ ] Remove `fzaninotto/faker`
+- [x] Remove `fideloper/proxy`
+- [x] Remove `laravel/legacy-factories`
+- [x] Remove `facade/ignition`
+- [x] Remove `fzaninotto/faker`
 
 ### Run Upgrade
-- [ ] Run `composer update`
-- [ ] Fix TrustProxies middleware
-- [ ] Clear all caches: `php artisan cache:clear && php artisan config:clear`
-- [ ] Run migrations
+- [x] Run `composer update`
+- [x] Fix TrustProxies middleware
+- [x] Fix config/trustedproxy.php
+- [x] Clear all caches: `php artisan cache:clear && php artisan config:clear`
+- [x] Verify Laravel version (9.52.21)
 - [ ] Test authentication
 - [ ] Test CRUD operations
 - [ ] Test PDF generation
@@ -41,7 +50,7 @@
 - [ ] Review Laravel logs for deprecation warnings
 
 ### Commit Changes
-- [ ] Commit all changes
+- [x] Commit all changes
 - [ ] Tag as `laravel-9`
 - [ ] Merge to staging branch
 
