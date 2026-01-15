@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        // RBAC Seeders - Must be run in this order
+        $this->call(RolesSeeder::class);
+        $this->call(PermissionsSeeder::class);
+        $this->call(RolePermissionsSeeder::class);
+        $this->call(MenusSeeder::class);
+        $this->call(MenuPermissionsSeeder::class);
     }
 }
