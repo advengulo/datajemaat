@@ -14,50 +14,82 @@ class data_jemaat extends Model
     public const PEREMPUAN = 2;
 
     protected $fillable = [
-        'id','jemaat_nomor_stambuk','jemaat_nama','jemaat_gelar_depan','jemaat_gelar_belakang','jemaat_nama_alias','jemaat_tempat_lahir','jemaat_tanggal_lahir','jemaat_jenis_kelamin','jemaat_tanggal_baptis','jemaat_tanggal_sidi','jemaat_status_perkawinan','jemaat_tanggal_perkawinan','id_pendidikan_akhir','id_lingkungan','jemaat_tanggal_bergabung','jemaat_alamat_rumah','jemaat_nomor_hp','jemaat_email','jemaat_status_aktif','id_pekerjaan','jemaat_status_dikeluarga','id_parent','jemaat_golongan_darah','jemaat_kk_status', 'is_simpatisan',
+        'id',
+        'jemaat_nomor_stambuk',
+        'jemaat_nama',
+        'jemaat_gelar_depan',
+        'jemaat_gelar_belakang',
+        'jemaat_nama_alias',
+        'jemaat_tempat_lahir',
+        'jemaat_tanggal_lahir',
+        'jemaat_jenis_kelamin',
+        'jemaat_tanggal_baptis',
+        'jemaat_tanggal_sidi',
+        'jemaat_status_perkawinan',
+        'jemaat_tanggal_perkawinan',
+        'id_pendidikan_akhir',
+        'id_lingkungan',
+        'jemaat_tanggal_bergabung',
+        'jemaat_alamat_rumah',
+        'jemaat_nomor_hp',
+        'jemaat_email',
+        'jemaat_status_aktif',
+        'id_pekerjaan',
+        'jemaat_status_dikeluarga',
+        'id_parent',
+        'jemaat_golongan_darah',
+        'jemaat_kk_status',
+        'is_simpatisan',
 
     ];
 
-    protected $dates=[
-        'jemaat_tanggal_lahir', 'jemaat_tanggal_baptis', 'jemaat_tanggal_sidi', 'jemaat_tanggal_bergabung','jemaat_tanggal_perkawinan'
+    protected $casts = [
+        'jemaat_tanggal_lahir' => 'datetime',
+        'jemaat_tanggal_baptis' => 'datetime',
+        'jemaat_tanggal_sidi' => 'datetime',
+        'jemaat_tanggal_bergabung' => 'datetime',
+        'jemaat_tanggal_perkawinan' => 'datetime',
+        'jemaat_kk_status' => 'boolean',
+        'is_simpatisan' => 'boolean',
     ];
 
     public function setJemaatTanggalLahirAttribute($value)
     {
-        if($value != null){
+        if ($value != null) {
             $this->attributes['jemaat_tanggal_lahir'] = Helper::dateFormat($value);
         }
     }
     public function setJemaatTanggalBaptisAttribute($value)
     {
-        if($value != null){
+        if ($value != null) {
             $this->attributes['jemaat_tanggal_baptis'] = Helper::dateFormat($value);
         }
     }
     public function setJemaatTanggalSidiAttribute($value)
     {
-        if($value != null){
+        if ($value != null) {
             $this->attributes['jemaat_tanggal_sidi'] = Helper::dateFormat($value);
         }
     }
     public function setJemaatTanggalBergabungAttribute($value)
     {
-        if($value != null){
+        if ($value != null) {
             $this->attributes['jemaat_tanggal_bergabung'] = Helper::dateFormat($value);
         }
     }
     public function setJemaatTanggalPerkawinanAttribute($value)
     {
-        if($value != null){
+        if ($value != null) {
             $this->attributes['jemaat_tanggal_perkawinan'] = Helper::dateFormat($value);
         }
     }
 
-    public function getAge(){
+    public function getAge()
+    {
         $data = Helper::isJemaatPassedAway($this->jemaat_nomor_stambuk);
 
-        if($data){
-            $diff  = date_diff($this->jemaat_tanggal_lahir, $data->jemaat_tanggal_status );
+        if ($data) {
+            $diff = date_diff($this->jemaat_tanggal_lahir, $data->jemaat_tanggal_status);
 
             return $diff->format('%y Tahun, %m Bulan, %d Hari / Meninggal');
         }
@@ -71,17 +103,19 @@ class data_jemaat extends Model
         return $q->where('id_parent', $id);
     }
 
-    public function countAge(){
+    public function countAge()
+    {
         return $this->jemaat_tanggal_lahir->diff(Carbon::now())->y;
     }
 
-    public function getYearBergabung(){
+    public function getYearBergabung()
+    {
         return $this->jemaat_tanggal_bergabung->year;
     }
 
     public function scopeIsActive($q)
     {
-        return $q->where('jemaat_status_aktif','t');
+        return $q->where('jemaat_status_aktif', 't');
     }
 
     public function scopeIsSimpatisan($q, $override = true)
@@ -131,7 +165,7 @@ class data_jemaat extends Model
 
     public function scopeGetWarningTanggalLahir($query, $tahun)
     {
-        return $query->where('jemaat_tanggal_lahir', '<', $tahun.'-01-01')
+        return $query->where('jemaat_tanggal_lahir', '<', $tahun . '-01-01')
             ->orWhere('jemaat_tanggal_lahir', '>', Carbon::now())
             ->where('jemaat_status_aktif', 't');
     }
