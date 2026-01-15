@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use App\Traits\HasRoles;
 use App\Traits\HasPermissions;
 use App\Traits\HasLingkunganScope;
 
 class User extends Authenticatable
 {
+    use HasFactory;
     use Notifiable;
     use HasRoles;
     use HasPermissions;

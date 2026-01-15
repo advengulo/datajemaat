@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\Helper;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class data_jemaat extends Model
 {
+    use HasFactory;
     public const LAKI_LAKI = 1;
     public const PEREMPUAN = 2;
 
