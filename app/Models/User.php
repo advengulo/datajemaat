@@ -38,22 +38,44 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the roles that belong to the user.
+     * Get the roles assigned to the user.
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id')
+                    ->withPivot('id_lingkungan')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get all permissions for the user through their roles.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function permissions()
+    {
+        return $this->roles->map->permissions->flatten()->unique('id');
+    }
+
+    /**
+     * Get all permission slugs for the user.
+     *
+     * @return array
+     */
+    public function getPermissionSlugs()
+    {
+        return $this->permissions()->pluck('slug')->toArray();
     }
 
     /**
      * Check if user has a specific role.
      *
-     * @param string $role
+     * @param string $roleSlug
      * @return bool
      */
-    public function hasRole($role)
+    public function hasRole($roleSlug)
     {
-        return $this->roles()->where('slug', $role)->exists();
+        return $this->roles()->where('slug', $roleSlug)->exists();
     }
 
     /**
@@ -75,35 +97,64 @@ class User extends Authenticatable
      */
     public function hasAllRoles(array $roles)
     {
-        return $this->roles()->whereIn('slug', $roles)->count() === count($roles);
+        $userRoles = $this->roles()->pluck('slug')->toArray();
+        return count(array_intersect($roles, $userRoles)) === count($roles);
     }
 
     /**
      * Check if user has a specific permission.
      *
-     * @param string $permission
+     * @param string $permissionSlug
      * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission($permissionSlug)
     {
-        return $this->roles()->whereHas('permissions', function ($query) use ($permission) {
-            $query->where('slug', $permission);
-        })->exists();
+        return in_array($permissionSlug, $this->getPermissionSlugs());
+    }
+
+    /**
+     * Check if user has any of the given permissions.
+     *
+     * @param array $permissions
+     * @return bool
+     */
+    public function hasAnyPermission(array $permissions)
+    {
+        $userPermissions = $this->getPermissionSlugs();
+        return count(array_intersect($permissions, $userPermissions)) > 0;
+    }
+
+    /**
+     * Check if user has all of the given permissions.
+     *
+     * @param array $permissions
+     * @return bool
+     */
+    public function hasAllPermissions(array $permissions)
+    {
+        $userPermissions = $this->getPermissionSlugs();
+        return count(array_intersect($permissions, $userPermissions)) === count($permissions);
     }
 
     /**
      * Assign role to user.
      *
      * @param mixed $role
+     * @param int|null $lingkunganId
      * @return void
      */
-    public function assignRole($role)
+    public function assignRole($role, $lingkunganId = null)
     {
         if (is_string($role)) {
             $role = Role::where('slug', $role)->firstOrFail();
         }
 
-        $this->roles()->syncWithoutDetaching($role);
+        $pivotData = [];
+        if ($lingkunganId !== null) {
+            $pivotData['id_lingkungan'] = $lingkunganId;
+        }
+
+        $this->roles()->syncWithoutDetaching([$role->id => $pivotData]);
     }
 
     /**
@@ -141,5 +192,79 @@ class User extends Authenticatable
         }
 
         $this->roles()->sync($roleIds);
+    }
+
+    /**
+     * Get the lingkungan IDs the user has access to based on their roles.
+     *
+     * @return array
+     */
+    public function getAccessibleLingkunganIds()
+    {
+        // Super admin and SNK have access to all lingkungan
+        if ($this->hasAnyRole(['superadmin', 'snk'])) {
+            return master_lingkungan::pluck('id')->toArray();
+        }
+
+        // Lingkungan admin only has access to assigned lingkungan
+        return $this->roles()
+                    ->where('scope', 'lingkungan')
+                    ->get()
+                    ->pluck('pivot.id_lingkungan')
+                    ->filter()
+                    ->unique()
+                    ->values()
+                    ->toArray();
+    }
+
+    /**
+     * Check if user has access to a specific lingkungan.
+     *
+     * @param int $lingkunganId
+     * @return bool
+     */
+    public function hasAccessToLingkungan($lingkunganId)
+    {
+        return in_array($lingkunganId, $this->getAccessibleLingkunganIds());
+    }
+
+    /**
+     * Get the user's menu tree based on their permissions.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getMenuTree()
+    {
+        return Menu::getMenuTreeForUser($this->getPermissionSlugs());
+    }
+
+    /**
+     * Check if user is a super admin.
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('superadmin');
+    }
+
+    /**
+     * Check if user is SNK.
+     *
+     * @return bool
+     */
+    public function isSnk()
+    {
+        return $this->hasRole('snk');
+    }
+
+    /**
+     * Check if user is lingkungan admin.
+     *
+     * @return bool
+     */
+    public function isLingkunganAdmin()
+    {
+        return $this->hasRole('lingkungan_admin');
     }
 }
