@@ -198,9 +198,9 @@
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-database fa-fw"></span> <span class="mini-click-non">Admin</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li class="{{Request::is("admin/data-lingkungan") ? 'active' : ''}}"><a href="{{asset('/admin/data-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
-                                {{-- <li class="{{Request::is("admin/users") ? 'active' : ''}}"><a href="{{asset('/admin/users')}}"><span class="mini-sub-pro">Users</span></a></li> --}}
-                                {{-- <li class="{{Request::is("admin/roles") ? 'active' : ''}}"><a href="{{asset('/admin/roles')}}"><span class="mini-sub-pro">Roles</span></a></li> --}}
-                                {{-- <li class="{{Request::is("admin/drafts") ? 'active' : ''}}"><a href="{{asset('/admin/drafts')}}"><span class="mini-sub-pro">Pending Drafts @isset($pendingDraftsCount)<span class="badge badge-danger">{{ $pendingDraftsCount }}</span>@endisset</span></a></li> --}}
+                                <li class="{{Request::is("admin/users*") ? 'active' : ''}}"><a href="{{route('admin.users.index')}}"><span class="mini-sub-pro">Manage Users</span></a></li>
+                                <li class="{{Request::is("admin/roles*") ? 'active' : ''}}"><a href="{{route('admin.roles.index')}}"><span class="mini-sub-pro">Manage Roles</span></a></li>
+                                <li class="{{Request::is("admin/drafts/pending") ? 'active' : ''}}"><a href="{{route('admin.drafts.pending')}}"><span class="mini-sub-pro">Pending Approvals @isset($pendingDraftsCount)<span class="badge badge-warning">{{ $pendingDraftsCount }}</span>@endisset</span></a></li>
                             </ul>
                         </li>
                         @endrole

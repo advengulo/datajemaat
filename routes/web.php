@@ -109,16 +109,21 @@ Route::group(['middleware' => ['auth']], function () {
             Route::patch('/data-lingkungan/delete/{id}', 'destroy')->name('lingkungan.destroy');
         });
 
-        // User management routes (to be implemented)
-        // Route::resource('users', 'Admin\UserController');
+        // User management routes
+        Route::get('/users', [Admin\UserManagementController::class, 'index'])->name('admin.users.index');
+        Route::get('/users/{user}/edit', [Admin\UserManagementController::class, 'edit'])->name('admin.users.edit');
+        Route::put('/users/{user}', [Admin\UserManagementController::class, 'update'])->name('admin.users.update');
+        Route::post('/users/{user}/reset-password', [Admin\UserManagementController::class, 'resetPassword'])->name('admin.users.reset-password');
 
-        // Role management routes (to be implemented)
-        // Route::resource('roles', 'Admin\RoleController');
-
-        // Draft approval routes (to be implemented)
-        // Route::get('drafts', 'Admin\DraftController@index')->name('admin.drafts.index');
-        // Route::patch('drafts/{id}/approve', 'Admin\DraftController@approve')->name('admin.drafts.approve');
-        // Route::patch('drafts/{id}/reject', 'Admin\DraftController@reject')->name('admin.drafts.reject');
+        // Role management routes
+        Route::resource('roles', Admin\RoleController::class)->names([
+            'index' => 'admin.roles.index',
+            'create' => 'admin.roles.create',
+            'store' => 'admin.roles.store',
+            'edit' => 'admin.roles.edit',
+            'update' => 'admin.roles.update',
+            'destroy' => 'admin.roles.destroy',
+        ]);
     });
 
     // Draft Approval Routes (Admin only)

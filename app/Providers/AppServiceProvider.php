@@ -39,8 +39,7 @@ class AppServiceProvider extends ServiceProvider
             // Pending drafts count for superadmin
             $pendingDraftsCount = 0;
             if (auth()->check() && auth()->user()->isSuperAdmin()) {
-                // Uncomment when Draft model is created:
-                // $pendingDraftsCount = \App\Models\Draft::where('status', 'pending')->count();
+                $pendingDraftsCount = \App\Models\JemaatDraft::where('status', 'pending_review')->count();
             }
             $view->with('pendingDraftsCount', $pendingDraftsCount);
         });
