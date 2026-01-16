@@ -20,6 +20,14 @@ trait HasPermissions
     }
 
     /**
+     * Get all permissions (alias for permissions()).
+     */
+    public function getAllPermissions(): Collection
+    {
+        return $this->permissions();
+    }
+
+    /**
      * Get all permission slugs for the user.
      */
     public function getPermissionSlugs(): Collection
