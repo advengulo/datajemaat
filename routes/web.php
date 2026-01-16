@@ -120,6 +120,17 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::patch('drafts/{id}/approve', 'Admin\DraftController@approve')->name('admin.drafts.approve');
         // Route::patch('drafts/{id}/reject', 'Admin\DraftController@reject')->name('admin.drafts.reject');
     });
+
+    // Draft Approval Routes (Admin only)
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::controller(Admin\ApprovalController::class)->group(function () {
+            Route::get('/drafts/pending', 'pending')->name('drafts.pending');
+            Route::get('/drafts/{draft}/review', 'review')->name('drafts.review');
+            Route::post('/drafts/{draft}/approve', 'approve')->name('drafts.approve');
+            Route::post('/drafts/{draft}/reject', 'reject')->name('drafts.reject');
+            Route::post('/drafts/{draft}/request-revision', 'requestRevision')->name('drafts.request-revision');
+        });
+    });
 });
 
 Auth::routes();

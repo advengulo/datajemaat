@@ -74,7 +74,13 @@ class DataJemaatController extends Controller
 
     public function store(DataJemaatStore $request)
     {
-        $this->jemaatSrv->storeDataJemaat($request);
+        $result = $this->jemaatSrv->storeDataJemaat($request);
+
+        if ($result['isDraft']) {
+            return redirect()->route('datajemaat')->with([
+                'success' => 'Data Jemaat berhasil dibuat dan sedang menunggu persetujuan.'
+            ]);
+        }
 
         return redirect()->route('datajemaat')->with(['success' => 'Data Jemaat berhasil di Tambahkan']);
     }
@@ -108,7 +114,18 @@ class DataJemaatController extends Controller
 
     public function update(Request $request, $id)
     {
-        $jemaat = $this->jemaatSrv->updateDataJemaat($request, $id);
+        $result = $this->jemaatSrv->updateDataJemaat($request, $id);
+
+        if ($result['isDraft']) {
+            return back()->with([
+                'update' => [
+                    'type' => 'success',
+                    'message' => 'Perubahan data berhasil dibuat dan sedang menunggu persetujuan.'
+                ]
+            ]);
+        }
+
+        $jemaat = $result['jemaat'];
 
         if(!$jemaat->wasChanged()){
             return back()->with([
