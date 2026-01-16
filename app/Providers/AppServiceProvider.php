@@ -35,6 +35,14 @@ class AppServiceProvider extends ServiceProvider
             // dd($notif['nonLingkungan']);
 
             $view->with('notif', $notif);
+
+            // Pending drafts count for superadmin
+            $pendingDraftsCount = 0;
+            if (auth()->check() && auth()->user()->isSuperAdmin()) {
+                // Uncomment when Draft model is created:
+                // $pendingDraftsCount = \App\Models\Draft::where('status', 'pending')->count();
+            }
+            $view->with('pendingDraftsCount', $pendingDraftsCount);
         });
     }
 }

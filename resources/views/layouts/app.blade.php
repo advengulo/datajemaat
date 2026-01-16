@@ -149,27 +149,42 @@
 								   <span class="mini-click-non">Dashboard</span>
 								</a>
                         </li>
+                        @canseemenu('jemaat')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-user-friends fa-fw" style='font-size:17px'></span> <span class="mini-click-non">Jemaat</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
+                                @permission('jemaat.view')
                                 <li class="{{Request::is("data-jemaat")?'active':''}} || {{Request::is("data-jemaat/profile/*")?'active':''}}"><a title="Data Jemaat" href={{asset('/data-jemaat')}}><span class="mini-sub-pro">Data Jemaat</span></a></li>
+                                @endpermission
+                                @permission('jemaat.create|jemaat.update')
                                 <li class="{{Request::is("tambah-jemaat")?'active':''}}"><a title="Tambah Jemaat" href={{asset('/tambah-jemaat')}}><span class="mini-sub-pro">Tambah Jemaat</span></a></li>
+                                @endpermission
+                                @permission('jemaat.view')
                                 <li class="{{Request::is("data-kepala-keluarga")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>
+                                @endpermission
                             </ul>
                         </li>
+                        @endcanseemenu
+                        @canseemenu('simpatisan')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-user-friends fa-fw" style='font-size:17px'></span> <span class="mini-click-non">Simpatisan</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
+                                @permission('simpatisan.view')
                                 <li class="{{Request::is("data-jemaat-simpatisan")?'active':''}} || {{Request::is("tambah-jemaat-simpatisan")?'active':''}}""><a title="Data Jemaat Simpatisan" href={{asset('/data-jemaat-simpatisan')}}><span class="mini-sub-pro">Data Simpatisan</span></a></li>
                                 <li class="{{Request::is("data-kepala-keluarga-simpatisan")?'active':''}}"><a title="Data Kepala Keluarga" href={{asset('/data-kepala-keluarga-simpatisan')}}><span class="mini-sub-pro">Kepala Keluarga</span></a></li>
+                                @endpermission
                             </ul>
                         </li>
+                        @endcanseemenu
+                        @permission('jemaat.view')
                         <li class="{{Request::is("kartu-jemaat")?'active':''}}" >
                             <a title="Kartu Jemaat" href={{ asset('/kartu-jemaat') }}>
 								   <span class="fas fa-id-card fa-fw" style='font-size:17px'></span>
 								   <span class="mini-click-non">Kartu Jemaat</span>
 								</a>
                         </li>
+                        @endpermission
+                        @permission('jemaat.view')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-table fa-fw"></span> <span class="mini-click-non">Jemaat Inaktif</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
@@ -177,14 +192,19 @@
                                 <li class="{{Request::is("data-jemaat-pindah") ? 'active' : ''}}"><a href="{{asset('/data-jemaat-pindah')}}"><span class="mini-sub-pro">Pindah</span></a></li>
                             </ul>
                         </li>
+                        @endpermission
+                        @role('superadmin')
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-database fa-fw"></span> <span class="mini-click-non">Data Master</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-database fa-fw"></span> <span class="mini-click-non">Admin</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li class="{{Request::is("data-lingkungan") ? 'active' : ''}}"><a href="{{asset('/data-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
-                                <li class="{{Request::is("#") ? 'active' : ''}}"><a href="{{asset('#')}}"><span class="mini-sub-pro">Pekerjaan</span></a></li>
-                                <li class="{{Request::is("#") ? 'active' : ''}}"><a href="{{asset('#')}}"><span class="mini-sub-pro">Pendidikan</span></a></li>
+                                <li class="{{Request::is("admin/data-lingkungan") ? 'active' : ''}}"><a href="{{asset('/admin/data-lingkungan')}}"><span class="mini-sub-pro">Lingkungan</span></a></li>
+                                {{-- <li class="{{Request::is("admin/users") ? 'active' : ''}}"><a href="{{asset('/admin/users')}}"><span class="mini-sub-pro">Users</span></a></li> --}}
+                                {{-- <li class="{{Request::is("admin/roles") ? 'active' : ''}}"><a href="{{asset('/admin/roles')}}"><span class="mini-sub-pro">Roles</span></a></li> --}}
+                                {{-- <li class="{{Request::is("admin/drafts") ? 'active' : ''}}"><a href="{{asset('/admin/drafts')}}"><span class="mini-sub-pro">Pending Drafts @isset($pendingDraftsCount)<span class="badge badge-danger">{{ $pendingDraftsCount }}</span>@endisset</span></a></li> --}}
                             </ul>
                         </li>
+                        @endrole
+                        @permission('jemaat.view')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-exclamation-triangle fa-fw"></span> <span class="mini-click-non">Data Warning<span> {!! $notif['dataWarning'] !!}</i> </span></span></a>
                             <ul class="submenu-angle" aria-expanded="false">
@@ -193,6 +213,8 @@
                                 <li class="{{Request::is("data-warning/data-ganda") ? 'active' : ''}}"><a href="{{asset('/data-warning/data-ganda')}}"><span class="mini-sub-pro">Data Ganda</span></a></li>
                             </ul>
                         </li>
+                        @endpermission
+                        @permission('laporan.view')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-scroll fa-fw"></span> <span class="mini-click-non">Laporan</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
@@ -202,6 +224,8 @@
                                 <li class="{{Request::is("laporan/data-sidi") ? 'active' : ''}}"><a href="{{asset('/laporan/data-sidi')}}"><span class="mini-sub-pro">Data Sidi</span></a></li>
                             </ul>
                         </li>
+                        @endpermission
+                        @permission('laporan.view')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-table fa-fw"></span> <span class="mini-click-non">Rekap Data</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
@@ -215,6 +239,8 @@
                                 <li class="{{Request::is("rekap-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/rekap-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>
                             </ul>
                         </li>
+                        @endpermission
+                        @permission('laporan.view')
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><span class="fas fa-chart-bar fa-fw"></span> <span class="mini-click-non">Grafik</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
@@ -227,6 +253,7 @@
                                 <li class="{{Request::is("grafik-jemaat-bergabung") ? 'active' : ''}}"><a href="{{asset('/grafik-jemaat-bergabung')}}"><span class="mini-sub-pro">Jemaat Bergabung</span></a></li>
                             </ul>
                         </li>
+                        @endpermission
                     </ul>
                 </nav>
             </div>
