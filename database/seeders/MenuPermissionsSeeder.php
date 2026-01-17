@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Menu;
 use App\Models\Permission;
@@ -17,9 +19,7 @@ class MenuPermissionsSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            // Clear existing menu-permission mappings
-            DB::table('menu_permissions')->truncate();
-
+            // Clear existing menu-permission mappings (already cleared by MenusSeeder and PermissionsSeeder)
             // Define menu-permission mappings
             $mappings = [
                 // Dashboard - accessible to all who can view any data

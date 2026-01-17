@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +18,10 @@ class RolesSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            // Clear existing roles
-            Role::truncate();
+            // Clear existing roles and related data
+            DB::table('role_permissions')->delete();
+            DB::table('user_roles')->delete();
+            DB::table('roles')->delete();
 
             // Create Super Admin role
             Role::create([

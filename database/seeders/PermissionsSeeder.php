@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +18,10 @@ class PermissionsSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            // Clear existing permissions
-            Permission::truncate();
+            // Clear existing permissions and related data
+            DB::table('role_permissions')->delete();
+            DB::table('menu_permissions')->delete();
+            DB::table('permissions')->delete();
 
             // Jemaat Module Permissions
             Permission::create([

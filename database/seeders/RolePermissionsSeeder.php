@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\Permission;
@@ -17,9 +19,7 @@ class RolePermissionsSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            // Clear existing role-permission mappings
-            DB::table('role_permissions')->truncate();
-
+            // Clear existing role-permission mappings (already cleared by RolesSeeder)
             // Get roles
             $superadmin = Role::where('slug', 'superadmin')->first();
             $snk = Role::where('slug', 'snk')->first();

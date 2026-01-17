@@ -17,7 +17,7 @@ class CreateUserRolesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('id_lingkungan')->nullable()->comment('For lingkungan-scoped roles only');
+            $table->unsignedInteger('id_lingkungan')->nullable()->comment('For lingkungan-scoped roles only');
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -32,7 +32,7 @@ class CreateUserRolesTable extends Migration
 
             $table->foreign('id_lingkungan')
                   ->references('id')
-                  ->on('master_lingkungan')
+                  ->on('master_lingkungans')
                   ->onDelete('cascade');
 
             $table->unique(['user_id', 'role_id', 'id_lingkungan'], 'user_role_lingkungan_unique');

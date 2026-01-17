@@ -16,7 +16,7 @@ class CreateUserLingkungansTable extends Migration
         Schema::create('user_lingkungans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('lingkungan_id');
+            $table->unsignedInteger('lingkungan_id');
             $table->timestamps();
 
             // Foreign keys

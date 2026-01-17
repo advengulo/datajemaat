@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jemaat_drafts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jemaat_id')->nullable();
+            $table->unsignedInteger('jemaat_id')->nullable();
             $table->enum('operation_type', ['create', 'update', 'delete']);
             $table->json('draft_data');
             $table->enum('status', ['draft', 'pending_review', 'approved', 'rejected', 'revision_required'])->default('draft');

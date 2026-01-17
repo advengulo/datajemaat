@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Menu;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +18,9 @@ class MenusSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            // Clear existing menus
-            Menu::truncate();
+            // Clear existing menus and related data
+            DB::table('menu_permissions')->delete();
+            DB::table('menus')->delete();
 
             // Create Dashboard (root level)
             $dashboard = Menu::create([
