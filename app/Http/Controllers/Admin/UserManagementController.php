@@ -36,7 +36,7 @@ class UserManagementController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'roles' => 'required|array',
             'roles.*' => 'exists:roles,id',
             'lingkungans' => 'nullable|array',
@@ -45,7 +45,7 @@ class UserManagementController extends Controller
 
         $user->update([
             'name' => $request->name,
-            'email' => $request->email,
+            'username' => $request->username,
         ]);
 
         // Sync roles

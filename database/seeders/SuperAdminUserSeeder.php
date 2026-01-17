@@ -24,7 +24,7 @@ class SuperAdminUserSeeder extends Seeder
         }
 
         $user = User::firstOrCreate(
-            ['email' => 'admin@datajemaat.com'],
+            ['username' => 'admin'],
             [
                 'name' => 'Super Admin',
                 'password' => Hash::make('password'), // Change this on first login!
@@ -33,7 +33,7 @@ class SuperAdminUserSeeder extends Seeder
 
         $user->roles()->syncWithoutDetaching([$superadminRole->id]);
 
-        $this->command->info('Superadmin user created: admin@datajemaat.com / password');
+        $this->command->info('Superadmin user created: admin / password');
         $this->command->warn('IMPORTANT: Change the default password on first login!');
     }
 }
