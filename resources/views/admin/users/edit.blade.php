@@ -35,8 +35,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" value="{{ $user->username }}" required>
                 </div>
 
                 <div class="form-group">

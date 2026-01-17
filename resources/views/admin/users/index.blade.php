@@ -21,7 +21,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Username</th>
                     <th>Roles</th>
                     <th>Created At</th>
                     <th>Actions</th>
@@ -32,7 +32,7 @@
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->username }}</td>
                     <td>
                         @foreach($user->roles as $role)
                         <span class="badge badge-primary">{{ $role->name }}</span>

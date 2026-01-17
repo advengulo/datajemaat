@@ -1,5 +1,21 @@
 <?php
 
+use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\DataJemaatController;
+use App\Http\Controllers\JemaatSimpatisanController;
+use App\Http\Controllers\KepalaKeluargaController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\LingkunganMasterController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ApprovalController;
+use App\Http\Controllers\ImportExportController;
+use App\Http\Controllers\KartuJemaatController;
+use App\Http\Controllers\JemaatInAktifController;
+use App\Http\Controllers\RekapDataController;
+use App\Http\Controllers\GrafikController;
+use App\Http\Controllers\DataWarningController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,16 +65,16 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::middleware(['scope.lingkungan'])->group(function () {
-        Route::get('/import-data', 'ImportExportController@importIndex')->name('import.index')->middleware('permission:jemaat.create');
-        Route::post('/import', 'ImportExportController@import')->name('import.datajemaat')->middleware('permission:jemaat.create');
+        Route::get('/import-data', [ImportExportController::class, 'importIndex'])->name('import.index')->middleware('permission:jemaat.create');
+        Route::post('/import', [ImportExportController::class, 'import'])->name('import.datajemaat')->middleware('permission:jemaat.create');
 
-        Route::get('/kartu-jemaat', 'KartuJemaatController@index')->name('kartujemaat')->middleware('permission:jemaat.view');
-        Route::post('/kartu-jemaat/download-all', 'KartuJemaatController@downloadZip')->name('download.all')->middleware('permission:jemaat.view');
-        Route::get('/kartu-jemaat/{data_jemaat}', 'KartuJemaatController@show')->name('lihatdatakk')->middleware('permission:jemaat.view');
-        Route::get('/kartu-jemaat/cetak-kartu/{data_jemaat}', 'KartuJemaatController@cetak_pdf')->name('cetakpdf')->middleware('permission:jemaat.view');
+        Route::get('/kartu-jemaat', [KartuJemaatController::class, 'index'])->name('kartujemaat')->middleware('permission:jemaat.view');
+        Route::post('/kartu-jemaat/download-all', [KartuJemaatController::class, 'downloadZip'])->name('download.all')->middleware('permission:jemaat.view');
+        Route::get('/kartu-jemaat/{data_jemaat}', [KartuJemaatController::class, 'show'])->name('lihatdatakk')->middleware('permission:jemaat.view');
+        Route::get('/kartu-jemaat/cetak-kartu/{data_jemaat}', [KartuJemaatController::class, 'cetak_pdf'])->name('cetakpdf')->middleware('permission:jemaat.view');
 
-        Route::get('/data-jemaat-meninggal', 'JemaatInAktifController@meninggal')->name('datameninggal')->middleware('permission:jemaat.view');
-        Route::get('/data-jemaat-pindah', 'JemaatInAktifController@pindah')->name('datapindah')->middleware('permission:jemaat.view');
+        Route::get('/data-jemaat-meninggal', [JemaatInAktifController::class, 'meninggal'])->name('datameninggal')->middleware('permission:jemaat.view');
+        Route::get('/data-jemaat-pindah', [JemaatInAktifController::class, 'pindah'])->name('datapindah')->middleware('permission:jemaat.view');
 
         Route::controller(LaporanController::class)->group(function () {
             Route::get('/laporan/tahunan', 'tahunan')->name('laporan.tahunan')->middleware('permission:laporan.view');
@@ -68,32 +84,32 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         Route::middleware(['permission:laporan.view'])->group(function () {
-            Route::get('/rekap-lingkungan', 'RekapDataController@lingkungan');
-            Route::get('/rekap-kepalakeluarga', 'RekapDataController@kepalakeluarga');
-            Route::get('/rekap-jenis-kelamin', 'RekapDataController@jeniskelamin');
-            Route::get('/rekap-jenis-usia', 'RekapDataController@jenisusia');
-            Route::get('/rekap-status-perkawinan', 'RekapDataController@statusperkawinan');
-            Route::get('/rekap-pendidikan', 'RekapDataController@pendidikan');
-            Route::get('/rekap-pekerjaan', 'RekapDataController@pekerjaan');
-            Route::get('/rekap-pekerjaan/show', 'RekapDataController@getPekerjaan')->name('getPekerjaan');
-            Route::get('/rekap-jemaat-bergabung', 'RekapDataController@jemaatbergabung');
+            Route::get('/rekap-lingkungan', [RekapDataController::class, 'lingkungan']);
+            Route::get('/rekap-kepalakeluarga', [RekapDataController::class, 'kepalakeluarga']);
+            Route::get('/rekap-jenis-kelamin', [RekapDataController::class, 'jeniskelamin']);
+            Route::get('/rekap-jenis-usia', [RekapDataController::class, 'jenisusia']);
+            Route::get('/rekap-status-perkawinan', [RekapDataController::class, 'statusperkawinan']);
+            Route::get('/rekap-pendidikan', [RekapDataController::class, 'pendidikan']);
+            Route::get('/rekap-pekerjaan', [RekapDataController::class, 'pekerjaan']);
+            Route::get('/rekap-pekerjaan/show', [RekapDataController::class, 'getPekerjaan'])->name('getPekerjaan');
+            Route::get('/rekap-jemaat-bergabung', [RekapDataController::class, 'jemaatbergabung']);
 
-            Route::get('/grafik-lingkungan', 'GrafikController@lingkungan');
-            Route::get('/grafik-jenis-kelamin', 'GrafikController@jeniskelamin');
-            Route::get('/grafik-jenis-usia', 'GrafikController@jenisusia');
-            Route::get('/grafik-status-perkawinan', 'GrafikController@statusperkawinan');
-            Route::get('/grafik-pendidikan', 'GrafikController@pendidikan');
-            Route::get('/grafik-pekerjaan', 'GrafikController@pekerjaan');
-            Route::get('/grafik-jemaat-bergabung', 'GrafikController@jemaatbergabung');
+            Route::get('/grafik-lingkungan', [GrafikController::class, 'lingkungan']);
+            Route::get('/grafik-jenis-kelamin', [GrafikController::class, 'jeniskelamin']);
+            Route::get('/grafik-jenis-usia', [GrafikController::class, 'jenisusia']);
+            Route::get('/grafik-status-perkawinan', [GrafikController::class, 'statusperkawinan']);
+            Route::get('/grafik-pendidikan', [GrafikController::class, 'pendidikan']);
+            Route::get('/grafik-pekerjaan', [GrafikController::class, 'pekerjaan']);
+            Route::get('/grafik-jemaat-bergabung', [GrafikController::class, 'jemaatbergabung']);
         });
 
         Route::prefix('data-warning')->middleware(['permission:jemaat.view'])->group(function () {
-            Route::get('/tanggal-lahir', 'DataWarningController@tanggalLahir')->name('warning.tanggal-lahir');
-            Route::get('/data-tunggal', 'DataWarningController@tunggal')->name('warning.data-tunggal');
-            Route::get('/data-ganda', 'DataWarningController@duplicate')->name('warning.data-ganda');
+            Route::get('/tanggal-lahir', [DataWarningController::class, 'tanggalLahir'])->name('warning.tanggal-lahir');
+            Route::get('/data-tunggal', [DataWarningController::class, 'tunggal'])->name('warning.data-tunggal');
+            Route::get('/data-ganda', [DataWarningController::class, 'duplicate'])->name('warning.data-ganda');
         });
 
-        Route::post('/data-keluarga/{id}', 'DataJemaatController@updateDataKeluarga')->name('update.data-keluarga')->middleware('permission:jemaat.update');
+        Route::post('/data-keluarga/{id}', [DataJemaatController::class, 'updateDataKeluarga'])->name('update.data-keluarga')->middleware('permission:jemaat.update');
 
         Route::controller(NotifikasiController::class)->group(function () {
             Route::get('/notifikasi/non-lingkungan', 'index')->name('notif.non-lingkungan')->middleware('permission:jemaat.view');
@@ -110,13 +126,13 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         // User management routes
-        Route::get('/users', [Admin\UserManagementController::class, 'index'])->name('admin.users.index');
-        Route::get('/users/{user}/edit', [Admin\UserManagementController::class, 'edit'])->name('admin.users.edit');
-        Route::put('/users/{user}', [Admin\UserManagementController::class, 'update'])->name('admin.users.update');
-        Route::post('/users/{user}/reset-password', [Admin\UserManagementController::class, 'resetPassword'])->name('admin.users.reset-password');
+        Route::get('/users', [UserManagementController::class, 'index'])->name('admin.users.index');
+        Route::get('/users/{user}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
+        Route::put('/users/{user}', [UserManagementController::class, 'update'])->name('admin.users.update');
+        Route::post('/users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('admin.users.reset-password');
 
         // Role management routes
-        Route::resource('roles', Admin\RoleController::class)->names([
+        Route::resource('roles', RoleController::class)->names([
             'index' => 'admin.roles.index',
             'create' => 'admin.roles.create',
             'store' => 'admin.roles.store',
@@ -128,7 +144,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Draft Approval Routes (Admin only)
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::controller(Admin\ApprovalController::class)->group(function () {
+        Route::controller(ApprovalController::class)->group(function () {
             Route::get('/drafts/pending', 'pending')->name('drafts.pending');
             Route::get('/drafts/{draft}/review', 'review')->name('drafts.review');
             Route::post('/drafts/{draft}/approve', 'approve')->name('drafts.approve');
