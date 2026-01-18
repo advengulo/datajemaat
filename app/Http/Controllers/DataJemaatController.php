@@ -36,7 +36,10 @@ class DataJemaatController extends Controller
         $datajemaats = data_jemaat::with('lingkungan')
             ->isActive()->isSimpatisan(false)
             ->select('data_jemaats.*');
-        
+
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
+
         if ($request->ajax()) {
             return DataTables::of($datajemaats)
                 ->addColumn('jemaat_status_aktif', function () {
@@ -57,18 +60,35 @@ class DataJemaatController extends Controller
     public function create()
     {
         $data_pendidikans = master_pendidikan::all();
-        $data_lingkungans = master_lingkungan::all();
+
+        // Filter lingkungan based on user access
+        if (auth()->user()->hasGlobalLingkunganAccess()) {
+            $data_lingkungans = master_lingkungan::all();
+        } else {
+            $lingkunganIds = auth()->user()->getLingkunganIds();
+            $data_lingkungans = master_lingkungan::whereIn('id', $lingkunganIds)->get();
+        }
+
         $data_pekerjaans = master_pekerjaan::all();
-        $dataKK = data_jemaat::where('jemaat_kk_status', true)->where('jemaat_status_aktif', 't')->get();
+
+        // Apply lingkungan scope to jemaat queries
+        $dataKK = data_jemaat::where('jemaat_kk_status', true)
+            ->where('jemaat_status_aktif', 't');
+        $dataKK = auth()->user()->applyLingkunganScope($dataKK, 'id_lingkungan');
+        $dataKK = $dataKK->get();
+
         $dataAyah = data_jemaat::where('jemaat_status_aktif','t')
             ->where('jemaat_jenis_kelamin', 'l')
-            ->where('jemaat_status_perkawinan', '!=', 2)
-            ->get();
+            ->where('jemaat_status_perkawinan', '!=', 2);
+        $dataAyah = auth()->user()->applyLingkunganScope($dataAyah, 'id_lingkungan');
+        $dataAyah = $dataAyah->get();
+
         $dataIbu = data_jemaat::where('jemaat_status_aktif','t')
             ->where('jemaat_jenis_kelamin', 'p')
-            ->where('jemaat_status_perkawinan', '!=', 2)
-            ->get();
-        
+            ->where('jemaat_status_perkawinan', '!=', 2);
+        $dataIbu = auth()->user()->applyLingkunganScope($dataIbu, 'id_lingkungan');
+        $dataIbu = $dataIbu->get();
+
         return view('pages.jemaat.tambah-jemaat', compact('data_pendidikans','data_lingkungans','data_pekerjaans', 'dataKK', 'dataAyah', 'dataIbu'));
     }
 
@@ -87,33 +107,68 @@ class DataJemaatController extends Controller
 
     public function show(data_jemaat $data_jemaat)
     {
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         $parent = $data_jemaat->id_parent;
         $idjemaat = $data_jemaat->id;
         $dataKeluarga = DataKeluarga::with('ayah', 'ibu')->where('no_stambuk', '=', $data_jemaat->jemaat_nomor_stambuk)
             ->where('status_hubungan', '=', 1)->first();
 
         $kepalaKeluarga = data_jemaat::where('id_parent', $parent)->where('jemaat_kk_status', true)->first();
-            
+
         return view('pages.jemaat.profile-jemaat', compact('data_jemaat', 'dataKeluarga', 'kepalaKeluarga'));
     }
 
     public function edit(data_jemaat $data_jemaat)
     {
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         $this->$data_jemaat = $data_jemaat->id;
         $no_stambuk = $data_jemaat->jemaat_nomor_stambuk;
         $data_pendidikans = master_pendidikan::all();
-        $data_lingkungans = master_lingkungan::all();
+
+        // Filter lingkungan based on user access
+        if (auth()->user()->hasGlobalLingkunganAccess()) {
+            $data_lingkungans = master_lingkungan::all();
+        } else {
+            $lingkunganIds = auth()->user()->getLingkunganIds();
+            $data_lingkungans = master_lingkungan::whereIn('id', $lingkunganIds)->get();
+        }
+
         $data_pekerjaans = DB::table('master_pekerjaans')
             ->orderBy('jenis_pekerjaan', 'asc')->get();
         $data_keluarga = DataKeluarga::where('no_stambuk', '=', $no_stambuk)
             ->first();
-        $dataKK = data_jemaat::where('jemaat_kk_status', true)->where('jemaat_status_aktif', 't')->get();
 
-        return view('pages.jemaat.edit-jemaat', compact('data_jemaat', 'data_pendidikans','data_lingkungans', 'data_pekerjaans', 'data_keluarga','dataKK'));      
+        // Apply lingkungan scope to dataKK
+        $dataKK = data_jemaat::where('jemaat_kk_status', true)
+            ->where('jemaat_status_aktif', 't');
+        $dataKK = auth()->user()->applyLingkunganScope($dataKK, 'id_lingkungan');
+        $dataKK = $dataKK->get();
+
+        return view('pages.jemaat.edit-jemaat', compact('data_jemaat', 'data_pendidikans','data_lingkungans', 'data_pekerjaans', 'data_keluarga','dataKK'));
     }
 
     public function update(Request $request, $id)
     {
+        // Check if user has access to this jemaat's lingkungan
+        $data_jemaat = data_jemaat::findOrFail($id);
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         $result = $this->jemaatSrv->updateDataJemaat($request, $id);
 
         if ($result['isDraft']) {
@@ -147,7 +202,14 @@ class DataJemaatController extends Controller
     public function destroy(data_jemaat $data_jemaat, $id)
     {
         $data_jemaat = data_jemaat::find($id);
-        
+
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         $data_jemaat->update([
             'jemaat_status_aktif' => "del",
         ]);
@@ -159,6 +221,15 @@ class DataJemaatController extends Controller
         DB::beginTransaction();
         try {
             $data_jemaat = data_jemaat::find($id);
+
+            // Check if user has access to this jemaat's lingkungan
+            if (!auth()->user()->hasGlobalLingkunganAccess()) {
+                if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                    DB::rollback();
+                    abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+                }
+            }
+
             if($data_jemaat->jemaat_kk_status == true){
                 $dataKeluargas = data_jemaat::where('id_parent', $id)->get();
                 foreach($dataKeluargas as $dataKeluarga){
@@ -196,6 +267,15 @@ class DataJemaatController extends Controller
         DB::beginTransaction();
         try {
             $data_jemaat = data_jemaat::find($id);
+
+            // Check if user has access to this jemaat's lingkungan
+            if (!auth()->user()->hasGlobalLingkunganAccess()) {
+                if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                    DB::rollback();
+                    abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+                }
+            }
+
             //Cari apakah data tunggal, sehingga tidak perlu mengubah otomatis kepala keluarga
             $isSingleData = data_jemaat::where('id_parent', $data_jemaat->id_parent)->where('jemaat_status_aktif', 't')
                             ->count();
@@ -283,6 +363,14 @@ class DataJemaatController extends Controller
     public function jadikankk(Request $request, $id)
     {
         $data_jemaat = data_jemaat::find($id);
+
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         if($data_jemaat->jemaat_kk_status == true){
             return back()->with(['warning' => 'Data Jemaat sudah berstatus kepala keluarga']);
         }
@@ -314,6 +402,13 @@ class DataJemaatController extends Controller
     {
         $datajemaats = data_jemaat::lingkunganNull()->isActive();
 
+        // Apply lingkungan scope for lingkungan admin
+        // Note: For non-lingkungan data, only superadmin and SNK should see this
+        // Lingkungan admin should not see non-lingkungan data
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            $datajemaats = $datajemaats->whereRaw('1 = 0'); // Return empty results
+        }
+
         if($request->ajax()){  
             return DataTables::of($datajemaats)
                 ->addColumn('kepala_keluarga', function($datajemaats) { 
@@ -338,6 +433,13 @@ class DataJemaatController extends Controller
     public function updateStatusSimpatisan($id)
     {
         $data_jemaat = data_jemaat::find($id);
+
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
 
         if ($data_jemaat->is_simpatisan) {
             return back()->with(['warning' => 'Data jemaat merupakan jemaat simpatisan']);

@@ -17,6 +17,9 @@ class KepalaKeluargaController extends Controller
         $datajemaats = data_jemaat::with('pekerjaan','lingkungan')->where('jemaat_kk_status', '=', true)
                         ->where('jemaat_status_aktif','t');
 
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
+
         if($request->ajax()){
             return DataTables::of($datajemaats)
                 ->editColumn('lingkungan', function($datajemaats) {
@@ -49,6 +52,9 @@ class KepalaKeluargaController extends Controller
             ->isKepalaKeluarga()
             ->isSimpatisan()
             ->isActive();
+
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
 
         if($request->ajax()){
             return DataTables::of($datajemaats)

@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 trait HasLingkunganScope
 {
@@ -23,9 +24,9 @@ trait HasLingkunganScope
     /**
      * Get all lingkungan IDs assigned to this user.
      */
-    public function getLingkunganIds(): array
+    public function getLingkunganIds(): Collection
     {
-        return $this->lingkungans()->pluck('id')->toArray();
+        return $this->lingkungans()->pluck('master_lingkungans.id');
     }
 
     /**
@@ -37,7 +38,7 @@ trait HasLingkunganScope
             return true;
         }
 
-        return $this->lingkungans()->where('id', $lingkunganId)->exists();
+        return $this->lingkungans()->where('master_lingkungans.id', $lingkunganId)->exists();
     }
 
     /**

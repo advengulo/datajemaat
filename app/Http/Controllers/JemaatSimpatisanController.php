@@ -31,6 +31,9 @@ class JemaatSimpatisanController extends Controller
             ->isActive()->isSimpatisan()
             ->select('data_jemaats.*');
 
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
+
         if ($request->ajax()) {
             return DataTables::of($datajemaats)
                 ->addColumn('jemaat_status_aktif', function () {
@@ -51,18 +54,35 @@ class JemaatSimpatisanController extends Controller
     public function create()
     {
         $data_pendidikans = master_pendidikan::all();
-        $data_lingkungans = master_lingkungan::all();
+
+        // Filter lingkungan based on user access
+        if (auth()->user()->hasGlobalLingkunganAccess()) {
+            $data_lingkungans = master_lingkungan::all();
+        } else {
+            $lingkunganIds = auth()->user()->getLingkunganIds();
+            $data_lingkungans = master_lingkungan::whereIn('id', $lingkunganIds)->get();
+        }
+
         $data_pekerjaans = master_pekerjaan::all();
-        $dataKK = data_jemaat::where('jemaat_kk_status', true)->where('jemaat_status_aktif', 't')->get();
+
+        // Apply lingkungan scope to jemaat queries
+        $dataKK = data_jemaat::where('jemaat_kk_status', true)
+            ->where('jemaat_status_aktif', 't');
+        $dataKK = auth()->user()->applyLingkunganScope($dataKK, 'id_lingkungan');
+        $dataKK = $dataKK->get();
+
         $dataAyah = data_jemaat::where('jemaat_status_aktif','t')
             ->where('jemaat_jenis_kelamin', 'l')
-            ->where('jemaat_status_perkawinan', '!=', 2)
-            ->get();
+            ->where('jemaat_status_perkawinan', '!=', 2);
+        $dataAyah = auth()->user()->applyLingkunganScope($dataAyah, 'id_lingkungan');
+        $dataAyah = $dataAyah->get();
+
         $dataIbu = data_jemaat::where('jemaat_status_aktif','t')
             ->where('jemaat_jenis_kelamin', 'p')
-            ->where('jemaat_status_perkawinan', '!=', 2)
-            ->get();
-        
+            ->where('jemaat_status_perkawinan', '!=', 2);
+        $dataIbu = auth()->user()->applyLingkunganScope($dataIbu, 'id_lingkungan');
+        $dataIbu = $dataIbu->get();
+
         return view('pages.jemaat.simpatisan.create', compact('data_pendidikans','data_lingkungans','data_pekerjaans', 'dataKK', 'dataAyah', 'dataIbu'));
     }
 

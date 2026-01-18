@@ -19,8 +19,12 @@ class JemaatInAktifController extends Controller
             ->whereHas('riwayatinaktif', function ($query) {
                 $query->where('jemaat_keterangan_status', 'meninggal');
             })
-            ->where('jemaat_status_aktif','f')->get();
-        
+            ->where('jemaat_status_aktif','f');
+
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
+        $datajemaats = $datajemaats->get();
+
         return view('pages.jemaatinaktif.meninggal', compact('datajemaats'));
     }
     
@@ -30,7 +34,11 @@ class JemaatInAktifController extends Controller
             ->whereHas('riwayatinaktif', function ($query) {
                 $query->where('jemaat_keterangan_status', 'pindah');
             })
-            ->where('jemaat_status_aktif','f')->get();
+            ->where('jemaat_status_aktif','f');
+
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
+        $datajemaats = $datajemaats->get();
 
         return view('pages.jemaatinaktif.pindah', compact('datajemaats'));
     }

@@ -59,7 +59,7 @@ class BladeServiceProvider extends ServiceProvider
             }
 
             // Get all user permissions
-            $permissions = $user->getPermissionSlugs();
+            $permissions = collect($user->getPermissionSlugs());
 
             // Check if user has any permission related to this module
             // For example, if module is 'jemaat', check for permissions like 'jemaat.view', 'jemaat.create', etc.

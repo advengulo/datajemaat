@@ -28,7 +28,10 @@ class KartuJemaatController extends Controller
         $datajemaats = data_jemaat::with('pekerjaan','lingkungan','kartukeluarga')
             ->where('jemaat_kk_status', '=', true)
             ->where('jemaat_status_aktif','t');
-        
+
+        // Apply lingkungan scope for lingkungan admin
+        $datajemaats = auth()->user()->applyLingkunganScope($datajemaats, 'id_lingkungan');
+
         if($request->ajax()){  
             return DataTables::of($datajemaats)
                 ->editColumn('lingkungan', function($datajemaats) { 
@@ -58,6 +61,13 @@ class KartuJemaatController extends Controller
 
     public function show(data_jemaat $data_jemaat)
     {
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         $idparent = $data_jemaat->id;
         $isNomorKartu = NomorKartu::where('no_stambuk', $data_jemaat->jemaat_nomor_stambuk)->first();
         
@@ -83,6 +93,13 @@ class KartuJemaatController extends Controller
 
     public function cetak_pdf(data_jemaat $data_jemaat)
     {
+        // Check if user has access to this jemaat's lingkungan
+        if (!auth()->user()->hasGlobalLingkunganAccess()) {
+            if (!auth()->user()->hasLingkunganAccess($data_jemaat->id_lingkungan)) {
+                abort(403, 'Anda tidak memiliki akses ke lingkungan ini.');
+            }
+        }
+
         $idparent = $data_jemaat->id;
         $isNomorKartu = NomorKartu::where('no_stambuk', $data_jemaat->jemaat_nomor_stambuk)->first();
 
@@ -116,8 +133,11 @@ class KartuJemaatController extends Controller
                             $q->where('nama_lingkungan', $namaLingkungan);
                         })
                         ->where('jemaat_kk_status', '=', true)
-                        ->where('jemaat_status_aktif','t')
-                        ->get();
+                        ->where('jemaat_status_aktif','t');
+
+        // Apply lingkungan scope for lingkungan admin
+        $dataAllKk = auth()->user()->applyLingkunganScope($dataAllKk, 'id_lingkungan');
+        $dataAllKk = $dataAllKk->get();
 
         foreach($dataAllKk as $data_jemaat){
             $idparent = $data_jemaat->id;
