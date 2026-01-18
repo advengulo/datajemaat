@@ -10,7 +10,7 @@
                     <form action="{{route('tambahdatajemaat')}}" method="post" enctype="multipart/form-data" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
                         {{ csrf_field() }}
                         <div class="row">
-                            @if ($errors->any())                                                       
+                            @if ($errors->any())
                                 @foreach ($errors->all() as $error)
                                     <div class="col-md-12">
                                         <div class="alert alert-danger alert-block" style="margin-bottom:0px;">
@@ -18,7 +18,7 @@
                                             <strong>{{ $error }}</strong>
                                         </div>
                                     </div>
-                                @endforeach                                                            
+                                @endforeach
                             @endif
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:4vh;margin-top:2vh">
                                 <ul id="myTabedu1" class="tab-review-design">
@@ -55,7 +55,7 @@
                                                             <label class="login2 pull-right pull-right-pro">Nama Alias</label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                            <input type="text" class="form-control" name="jemaat_nama_alias" value="{{ old('jemaat_nama_alias') }}">                                                            
+                                                            <input type="text" class="form-control" name="jemaat_nama_alias" value="{{ old('jemaat_nama_alias') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,7 +151,24 @@
                                                             <label class="login2 pull-right pull-right-pro">Nomor Lingkungan</label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                            <input style="border=0;" type="text" class="form-control" name="id_lingkungan" placeholder="Isi Nomor Lingkungan*" value="{{ old('id_lingkungan') }}">
+                                                            @if(auth()->user()->isLingkunganAdmin())
+                                                                @php
+                                                                    $userLingkungan = auth()->user()->lingkungans()->first();
+                                                                    $displayValue = $userLingkungan ? ($userLingkungan->nomor_lingkungan) : '';
+                                                                    $hiddenValue = $userLingkungan ? $userLingkungan->id : '';
+                                                                @endphp
+                                                                <input type="text" class="form-control"
+                                                                       value="{{ $displayValue }}"
+                                                                       readonly
+                                                                       style="background-color: #f5f5f5; cursor: not-allowed;">
+                                                                <input type="hidden" name="id_lingkungan" value="{{ old('id_lingkungan', $hiddenValue) }}">
+                                                                @if($userLingkungan)
+                                                                    <small class="text-muted">Lingkungan: {{ $userLingkungan->nama_lingkungan }}</small>
+                                                                @endif
+                                                            @else
+                                                                <input style="border=0;" type="text" class="form-control" name="id_lingkungan"
+                                                                       placeholder="Isi Nomor Lingkungan*" value="{{ old('id_lingkungan') }}">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -165,7 +182,7 @@
                                                                 <option disabled selected>--Pilih Pekerjaan--</option>
                                                                 @foreach($data_pekerjaans as $data_pekerjaan)
                                                                     <option value="{{$data_pekerjaan->id}}" {{ old('id_pekerjaan') == $data_pekerjaan->id ? 'selected' : '' }}>{{$data_pekerjaan->jenis_pekerjaan}}</option>
-                                                                @endforeach                                                                        
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -180,7 +197,7 @@
                                                                 <option disabled selected>--Pilih Pendidikan Akhir--</option>
                                                                 @foreach($data_pendidikans as $data_pendidikan)
                                                                     <option value="{{$data_pendidikan->id}}" {{ old('id_pendidikan_akhir') == $data_pendidikan->id ? 'selected' : '' }}>{{$data_pendidikan->nama_pendidikan}}</option>
-                                                                @endforeach                                                                        
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -211,7 +228,7 @@
                                                             <label class="login2 pull-right pull-right-pro">Email</label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                            <input style="border=0;" type="email" pattern="[^ @]*@[^ @]*" class="form-control" name="jemaat_email" value="{{ old('jemaat_email') }}">                                                        
+                                                            <input style="border=0;" type="email" pattern="[^ @]*@[^ @]*" class="form-control" name="jemaat_email" value="{{ old('jemaat_email') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -241,15 +258,15 @@
                                                 <div class="form-group-inner">
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                            <label class="login2 pull-right pull-right-pro">Kepala Keluarga </label>                                                            
+                                                            <label class="login2 pull-right pull-right-pro">Kepala Keluarga </label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                                             <div class="pull-left" id="is-kk" style="width:100px; height:40px; padding: 8px 0px;">
                                                                 <label>
-                                                                    <input type="radio" id="kk-true" value="1" {{ old('jemaat_kk_status') == 1 ? 'checked' : '' }} name="jemaat_kk_status"> <i></i> Ya 
+                                                                    <input type="radio" id="kk-true" value="1" {{ old('jemaat_kk_status') == 1 ? 'checked' : '' }} name="jemaat_kk_status"> <i></i> Ya
                                                                 </label>
-                                                                <label>    
-                                                                    <input type="radio" id="kk-false" value="0" {{ old('jemaat_kk_status') == 0 ? 'checked' : '' }} name="jemaat_kk_status"> <i></i> Bukan 
+                                                                <label>
+                                                                    <input type="radio" id="kk-false" value="0" {{ old('jemaat_kk_status') == 0 ? 'checked' : '' }} name="jemaat_kk_status"> <i></i> Bukan
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -283,7 +300,7 @@
                                                                 <option disabled selected></option>
                                                                 @foreach($dataKK as $data)
                                                                     <option value="{{$data->id}}" {{ old('id_parent') == $data->id ? 'selected' : '' }}>{{$data->jemaat_nama}} ({{$data->jemaat_nama_alias ?? "-"}})</option>
-                                                                @endforeach                                                                        
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -298,7 +315,7 @@
                                                                 <option disabled selected></option>
                                                                 @foreach($dataAyah as $data)
                                                                     <option value="{{$data->id}}" {{ old('id_ayah') == $data->id ? 'selected' : '' }}>{{$data->jemaat_nama}} ({{$data->jemaat_nama_alias ?? "-"}})</option>
-                                                                @endforeach                                                                        
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -314,7 +331,7 @@
                                                                 <option disabled selected></option>
                                                                 @foreach($dataIbu as $data)
                                                                     <option value="{{$data->id}}" {{ old('id_ibu') == $data->id ? 'selected' : '' }}>{{$data->jemaat_nama}} ({{$data->jemaat_nama_alias ?? "-"}})</option>
-                                                                @endforeach                                                                        
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -329,7 +346,7 @@
                                                             <label class="login2 pull-right pull-right-pro">Nama Ayah</label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                            <input type="text" class="form-control" name="namaAyah" value="{{ old('namaAyah') }}">                                                            
+                                                            <input type="text" class="form-control" name="namaAyah" value="{{ old('namaAyah') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,7 +356,7 @@
                                                             <label class="login2 pull-right pull-right-pro">Nama Ibu</label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                            <input type="text" class="form-control" name="namaIbu" value="{{ old('namaIbu') }}">                                                                                                                    
+                                                            <input type="text" class="form-control" name="namaIbu" value="{{ old('namaIbu') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -361,7 +378,7 @@
                             </div>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -378,7 +395,7 @@
             $('#div-status-dikeluarga').hide();
         } else {
             $('#pilihKK').show();
-            $('#jemaat_status_dikeluarga').prop('selectedIndex',0);        
+            $('#jemaat_status_dikeluarga').prop('selectedIndex',0);
             $("#div-status-dikeluarga").show();
         }
         })
@@ -405,7 +422,7 @@
 
         $('.datepicker').datepicker({
             format: 'dd-mm-yyyy'
-        }); 
+        });
     });
 </script>
 

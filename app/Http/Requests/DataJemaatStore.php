@@ -63,6 +63,30 @@ class DataJemaatStore extends FormRequest
             'jemaat_status_dikeluarga.required' => 'Pilih salah satu status dikeluarga',
             'id_parent.required_without' => 'Pilih kepala keluarga',
         ];
-        
+
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            // Only check for lingkungan admins
+            if (auth()->user()->isLingkunganAdmin()) {
+                $lingkunganId = $this->input('id_lingkungan');
+
+                // Verify user has access to the submitted lingkungan
+                if (!auth()->user()->hasLingkunganAccess($lingkunganId)) {
+                    $validator->errors()->add(
+                        'id_lingkungan',
+                        'Anda tidak memiliki akses untuk menambahkan jemaat ke lingkungan ini.'
+                    );
+                }
+            }
+        });
     }
 }
